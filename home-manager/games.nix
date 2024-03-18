@@ -11,7 +11,7 @@
     protonup-qt
     lutris
     heroic
-    prismlauncher
+    (prismlauncher.override { jdks = [ jdk8 jdk17 jdk19 ]; })
     unstable.path-of-building
   ];
 }
