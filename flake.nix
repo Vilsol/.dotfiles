@@ -131,6 +131,55 @@
           nixpkgs.lib.nixosSystem {
             inherit system modules specialArgs;
           };
+        nixos = let
+          system = "x86_64-linux";
+
+          unstable = import nixpkgs-unstable {
+            inherit system;
+            config = {
+              allowUnfree = true;
+              permittedInsecurePackages = ["electron-25.9.0"];
+              android_sdk.accept_license = true;
+            };
+          };
+
+          config.allowUnfree = true;
+          config.segger-jlink.acceptLicense = true;
+
+          extensions = inputs.nix-vscode-extensions.extensions.${system};
+
+          buildToolsVersion = "34.0.0";
+          androidComposition = unstable.androidenv.composeAndroidPackages {
+            buildToolsVersions = [buildToolsVersion "28.0.3"];
+            platformVersions = ["34" "28"];
+            abiVersions = ["armeabi-v7a" "arm64-v8a"];
+          };
+          androidSdk = androidComposition.androidsdk;
+
+          specialArgs = {
+            inherit system unstable nixpkgs extensions androidSdk;
+          };
+
+          modules = [
+            nix-flatpak.nixosModules.nix-flatpak
+            ragenix.nixosModules.default
+            {
+              environment.systemPackages = [ragenix.packages.${system}.default];
+            }
+            home-manager.nixosModules.home-manager
+            {
+              home-manager = {
+                useGlobalPkgs = true;
+                useUserPackages = true;
+                users.vilsol = import ./system/home-manager/default.nix;
+                extraSpecialArgs = specialArgs;
+              };
+            }
+          ];
+        in
+          nixpkgs.lib.nixosSystem {
+            inherit system modules specialArgs;
+          };
       };
     };
 }
