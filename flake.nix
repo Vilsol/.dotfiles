@@ -18,6 +18,8 @@
     nix-vscode-extensions.url = "github:nix-community/nix-vscode-extensions";
     nix-vscode-extensions.inputs.nixpkgs.follows = "nixpkgs";
 
+    nixos-hardware.url = "github:NixOS/nixos-hardware/master";
+
     agenix = {
       url = "github:ryantm/agenix";
       inputs = {
@@ -53,6 +55,7 @@
     pre-commit-hooks,
     flake-utils,
     ragenix,
+    nixos-hardware,
     ...
   } @ inputs:
     flake-utils.lib.eachDefaultSystem (
@@ -166,6 +169,8 @@
             {
               environment.systemPackages = [ragenix.packages.${system}.default];
             }
+            ./system/machines/framework/configuration.nix
+            ./system/machines/framework.nix
             home-manager.nixosModules.home-manager
             {
               home-manager = {
@@ -175,6 +180,7 @@
                 extraSpecialArgs = specialArgs;
               };
             }
+            nixos-hardware.nixosModules.framework-12th-gen-intel
           ];
         in
           nixpkgs.lib.nixosSystem {
