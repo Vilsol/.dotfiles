@@ -125,7 +125,17 @@
               home-manager = {
                 useGlobalPkgs = true;
                 useUserPackages = true;
-                users.vilsol = import ./system/home-manager/default.nix;
+                users.vilsol = {config, ...}: {
+                  imports = [
+                    ragenix.homeManagerModules.default
+                    ./system/home-manager/default.nix
+                  ];
+
+                  age = {
+                    secretsDir = "${config.home.homeDirectory}/.agenix/agenix";
+                    secretsMountPoint = "${config.home.homeDirectory}/.agenix/agenix.d";
+                  };
+                };
                 extraSpecialArgs = specialArgs;
               };
             }
