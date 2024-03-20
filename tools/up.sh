@@ -2,7 +2,7 @@
 
 tmpdir=$(mktemp -d)
 
-nix --extra-experimental-features nix-command build /home/vilsol/.dotfiles#nixosConfigurations."cortex".config.system.build.toplevel --verbose --out-link "$tmpdir/result"
+nix --extra-experimental-features nix-command build /home/vilsol/.dotfiles#nixosConfigurations."$(hostname)".config.system.build.toplevel --verbose --out-link "$tmpdir/result"
 # nix-build "<nixpkgs/nixos>" -A system -k --out-link "$tmpdir/result" |& nom
 
 if [[ "$?" != "0" ]]; then

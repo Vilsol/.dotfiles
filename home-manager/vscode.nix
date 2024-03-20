@@ -1,5 +1,5 @@
 {
-  pkgs,
+  unstable,
   extensions,
   ...
 }: let
@@ -51,7 +51,7 @@ in {
     enable = true;
     mutableExtensionsDir = false;
     extensions = extensionsList;
-    package = pkgs.vscode;
+    package = unstable.vscode;
     userSettings = {
       "editor.largeFileOptimizations" = false;
       "go.lintTool" = "golint";

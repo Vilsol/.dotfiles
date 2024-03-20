@@ -17,7 +17,7 @@
     };
   };
 
-  networking.hostName = "nixos"; # Define your hostname.
+  networking.hostName = "framework";
 
   networking.networkmanager.enable = true;
 
