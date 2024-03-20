@@ -55,6 +55,7 @@
     pre-commit-hooks,
     flake-utils,
     ragenix,
+    nixos-hardware,
     ...
   } @ inputs:
     flake-utils.lib.eachDefaultSystem (
@@ -106,7 +107,7 @@
           androidSdk = androidComposition.androidsdk;
 
           specialArgs = {
-            inherit system unstable nixpkgs extensions androidSdk;
+            inherit system unstable nixpkgs extensions androidSdk nixos-hardware;
           };
 
           modules = [
