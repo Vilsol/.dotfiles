@@ -10,7 +10,7 @@
     flake-utils.url = "github:numtide/flake-utils";
     flake-utils.inputs.systems.follows = "systems";
 
-    home-manager.url = "github:nix-community/home-manager/release-23.11";
+    home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
     nix-flatpak.url = "github:gmodena/nix-flatpak/?ref=v0.3.0";
@@ -83,7 +83,7 @@
     )
     // (
       let
-        mkSystem = system: name: let
+        mkSystem = system: name: is-full-desktop: let
           unstable = import nixpkgs-unstable {
             inherit system;
             config = {
@@ -95,6 +95,7 @@
 
           config.allowUnfree = true;
           config.segger-jlink.acceptLicense = true;
+          config.full-desktop = is-full-desktop;
 
           extensions = inputs.nix-vscode-extensions.extensions.${system};
 
@@ -114,7 +115,8 @@
             nix-flatpak.nixosModules.nix-flatpak
             ragenix.nixosModules.default
             {
-              environment.systemPackages = [ragenix.packages.${system}.default];
+              config.environment.systemPackages = [ragenix.packages.${system}.default];
+              config.full-desktop = is-full-desktop;
             }
 
             (./. + "/system/machines/${name}/configuration.nix")
@@ -125,15 +127,29 @@
               home-manager = {
                 useGlobalPkgs = true;
                 useUserPackages = true;
-                users.vilsol = {config, ...}: {
+                users.vilsol = {
+                  config,
+                  lib,
+                  ...
+                }: {
                   imports = [
                     ragenix.homeManagerModules.default
                     ./system/home-manager/default.nix
                   ];
 
-                  age = {
-                    secretsDir = "${config.home.homeDirectory}/.agenix/agenix";
-                    secretsMountPoint = "${config.home.homeDirectory}/.agenix/agenix.d";
+                  config = {
+                    age = {
+                      secretsDir = "${config.home.homeDirectory}/.agenix/agenix";
+                      secretsMountPoint = "${config.home.homeDirectory}/.agenix/agenix.d";
+                    };
+                  };
+
+                  options = {
+                    full-desktop = lib.mkOption {
+                      type = lib.types.bool;
+                      default = is-full-desktop;
+                      description = "include all desktop software and settings";
+                    };
                   };
                 };
                 extraSpecialArgs = specialArgs;
@@ -141,13 +157,13 @@
             }
           ];
         in
-          nixpkgs.lib.nixosSystem {
+          nixpkgs-unstable.lib.nixosSystem {
             inherit system modules specialArgs;
           };
       in {
         nixosConfigurations = {
-          cortex = mkSystem "x86_64-linux" "cortex";
-          framework = mkSystem "x86_64-linux" "framework";
+          cortex = mkSystem "x86_64-linux" "cortex" true;
+          framework = mkSystem "x86_64-linux" "framework" false;
         };
       }
     );

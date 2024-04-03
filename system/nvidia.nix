@@ -1,4 +1,8 @@
-{config, ...}: {
+{
+  config,
+  pkgs,
+  ...
+}: {
   services.xserver.videoDrivers = ["nvidia"];
 
   hardware = {
@@ -6,6 +10,10 @@
     nvidia.package = config.boot.kernelPackages.nvidiaPackages.beta;
     nvidia.modesetting.enable = true;
   };
+
+  environment.systemPackages = [
+    pkgs.nvidia-vaapi-driver
+  ];
 
   systemd.timers."nvidia-tdp" = {
     enable = true;
@@ -28,5 +36,10 @@
       ExecStartPre = "/run/current-system/sw/bin/nvidia-smi -pm 1";
       ExecStart = "/run/current-system/sw/bin/nvidia-smi -pl 200";
     };
+  };
+
+  environment.sessionVariables = {
+    LIBVA_DRIVER_NAME = "nvidia";
+    NVD_BACKEND = "direct";
   };
 }

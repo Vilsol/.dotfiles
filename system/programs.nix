@@ -4,6 +4,10 @@
   unstable,
   ...
 }: {
+  environment.sessionVariables = {
+    MOZ_DISABLE_RDD_SANDBOX = "1";
+  };
+
   programs = {
     _1password-gui = {
       enable = true;
@@ -25,6 +29,9 @@
       enable = true;
       preferences = {
         "media.hardwaremediakeys.enabled" = false;
+        "media.ffmpeg.vaapi.enabled" = true;
+        "media.rdd-ffmpeg.enabled" = true;
+        "gfx.x11-egl.force-enabled" = true;
       };
     };
 

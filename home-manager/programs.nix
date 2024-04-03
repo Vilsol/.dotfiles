@@ -1,30 +1,36 @@
 {
   pkgs,
   unstable,
+  lib,
+  config,
   ...
 }: {
-  home.packages = with pkgs; [
-    gnome.dconf-editor
-    gnome.gnome-tweaks
-    unstable.youtube-music
-    # gwe
-    mullvad-vpn
-    transmission-remote-gtk
-    gimp
-    wireshark
-    remmina
-    chromium
-    flameshot
-    easyeffects
-    kdenlive
-    libreoffice
-    handbrake
-    unstable.obsidian
-    fontconfig
-    jellyfin-media-player
-    pavucontrol
-    obs-studio
-    obs-studio-plugins.obs-pipewire-audio-capture
-    wineWowPackages.stable
-  ];
+  home.packages = with pkgs;
+    [
+      gnome.dconf-editor
+      gnome.gnome-tweaks
+      unstable.youtube-music
+      mullvad-vpn
+      transmission-remote-gtk
+      gimp
+      wireshark
+      remmina
+      chromium
+      flameshot
+      easyeffects
+      libreoffice
+      unstable.obsidian
+      fontconfig
+      jellyfin-media-player
+      pavucontrol
+      wineWowPackages.stable
+    ]
+    ++ lib.optionals config.full-desktop [
+      obs-studio
+      obs-studio-plugins.obs-pipewire-audio-capture
+      kdenlive
+      unstable.davinci-resolve
+      handbrake
+      gwe
+    ];
 }

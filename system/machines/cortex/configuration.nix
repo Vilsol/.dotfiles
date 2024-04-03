@@ -54,8 +54,8 @@
       };
       desktopManager.gnome.enable = true;
 
-      layout = "us";
-      xkbVariant = "";
+      xkb.layout = "us";
+      xkb.variant = "";
     };
 
     printing.enable = true;

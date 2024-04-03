@@ -1,4 +1,4 @@
-{
+{lib, ...}: {
   imports = [
     # ./anime.nix
     ./cachix.nix
@@ -14,4 +14,12 @@
     ./shell.nix
     ./virtual.nix
   ];
+
+  options = {
+    full-desktop = lib.mkOption {
+      type = lib.types.bool;
+      default = false;
+      description = "include all desktop software and settings";
+    };
+  };
 }

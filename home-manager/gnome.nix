@@ -10,6 +10,7 @@
     gnomeExtensions.tailscale-status
     gnomeExtensions.wireless-hid
     gnomeExtensions.grand-theft-focus
+    gnome.gnome-themes-extra
   ];
 
   dconf.settings = {

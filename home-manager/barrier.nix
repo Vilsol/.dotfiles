@@ -7,10 +7,13 @@
   age.secrets.barrier-pem.file = ../secrets/barrier-pem.age;
   age.secrets.barrier-fingerprints.file = ../secrets/barrier-fingerprints.age;
 
-  # services.barrier.client = {
-  #   enable = true;
-  #   server = "192.168.1.111";
-  # };
+  services.barrier.client =
+    if ! config.full-desktop
+    then {
+      enable = true;
+      server = "192.168.1.100";
+    }
+    else {};
 
   home = {
     file.".local/share/barrier/SSL/Barrier.pem".source = config.lib.file.mkOutOfStoreSymlink config.age.secrets.barrier-pem.path;
