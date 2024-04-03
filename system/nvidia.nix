@@ -42,4 +42,10 @@
     LIBVA_DRIVER_NAME = "nvidia";
     NVD_BACKEND = "direct";
   };
+
+  services.xserver = {
+    deviceSection = ''
+      Option "Coolbits" "12"
+    '';
+  };
 }

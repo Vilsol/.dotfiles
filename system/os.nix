@@ -10,4 +10,12 @@
       options = "--delete-older-than 14d";
     };
   };
+
+  boot = {
+    plymouth = {
+      enable = true;
+      theme = "breeze";
+    };
+    kernelParams = ["quiet" "udev.log_level=3"];
+  };
 }

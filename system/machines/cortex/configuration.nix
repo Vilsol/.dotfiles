@@ -18,6 +18,8 @@
 
       luks.devices."luks-1b641a1e-4ee4-47f6-8298-6255c9a68ac7".device = "/dev/disk/by-uuid/1b641a1e-4ee4-47f6-8298-6255c9a68ac7";
       luks.devices."luks-1b641a1e-4ee4-47f6-8298-6255c9a68ac7".keyFile = "/crypto_keyfile.bin";
+
+      systemd.enable = true;
     };
   };
 
@@ -31,15 +33,15 @@
   i18n.defaultLocale = "en_US.UTF-8";
 
   i18n.extraLocaleSettings = {
-    LC_ADDRESS = "lv_LV.UTF-8";
-    LC_IDENTIFICATION = "lv_LV.UTF-8";
+    LC_ADDRESS = "en_US.UTF-8";
+    LC_IDENTIFICATION = "en_US.UTF-8";
     LC_MEASUREMENT = "lv_LV.UTF-8";
-    LC_MONETARY = "lv_LV.UTF-8";
-    LC_NAME = "lv_LV.UTF-8";
-    LC_NUMERIC = "lv_LV.UTF-8";
+    LC_MONETARY = "en_US.UTF-8";
+    LC_NAME = "en_US.UTF-8";
+    LC_NUMERIC = "en_US.UTF-8";
     LC_PAPER = "lv_LV.UTF-8";
     LC_TELEPHONE = "lv_LV.UTF-8";
-    LC_TIME = "lv_LV.UTF-8";
+    LC_TIME = "en_US.UTF-8";
   };
 
   services = {
