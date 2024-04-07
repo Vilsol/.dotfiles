@@ -1,7 +1,5 @@
 {pkgs, ...}: {
-  # boot.kernelPackages = unstable.linuxPackages_zen;
   boot.kernelPackages = pkgs.linuxPackages;
-  # boot.kernelPackages = unstable.linuxPackages;
 
   boot.supportedFilesystems = ["ntfs"];
 

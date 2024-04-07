@@ -1,16 +1,16 @@
 {pkgs, ...}: {
   home.packages = with pkgs; [
-    gnomeExtensions.appindicator
+    gnome.gnome-themes-extra
     gnomeExtensions.advanced-alttab-window-switcher
     gnomeExtensions.always-show-titles-in-overview
+    gnomeExtensions.appindicator
     gnomeExtensions.blur-my-shell
+    gnomeExtensions.grand-theft-focus
     gnomeExtensions.no-overview
     gnomeExtensions.openweather
     gnomeExtensions.removable-drive-menu
     gnomeExtensions.tailscale-status
     gnomeExtensions.wireless-hid
-    gnomeExtensions.grand-theft-focus
-    gnome.gnome-themes-extra
   ];
 
   dconf.settings = {

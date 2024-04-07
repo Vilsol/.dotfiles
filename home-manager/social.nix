@@ -4,11 +4,11 @@
   ...
 }: {
   home.packages = with pkgs; [
-    unstable.telegram-desktop
-    unstable.slack
-    unstable.discord-canary
     unstable.discord
-    unstable.zapzap
+    unstable.discord-canary
     unstable.element-desktop
+    unstable.slack
+    unstable.telegram-desktop
+    unstable.zapzap
   ];
 }

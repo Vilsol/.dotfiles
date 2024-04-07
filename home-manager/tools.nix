@@ -1,35 +1,31 @@
 {pkgs, ...}: {
   home.packages = with pkgs; [
-    coreutils
-    nvd
-    vulkan-tools
-    glxinfo
-    fzf
-    neofetch
-    jq
     appimage-run
-    file
-    sqlite-web
-    nixfmt
-    htop
-    p7zip
-    kubectl
-    dig
-    exiv2
-    dive
-    usbutils
-    xorg.xkill
+    coreutils
     delve
-    unzip
-    backblaze-b2
-    iptables
-    gdu
+    dig
     distrobox
-    vault
-    consul
+    dive
+    exiv2
+    file
+    fzf
+    gdu
+    glxinfo
+    htop
+    iptables
+    jq
+    kubectl
+    neofetch
     nix-index
-    nix-update
     nix-output-monitor
+    nix-update
+    nixfmt
+    nvd
+    p7zip
+    unzip
+    usbutils
+    vulkan-tools
+    xorg.xkill
   ];
 
   programs.btop.enable = true;

@@ -4,14 +4,14 @@
   ...
 }: {
   home.packages = with pkgs; [
-    mangohud
-    unstable.bottles
-    dxvk
-    vkd3d-proton
-    protonup-qt
-    lutris
-    heroic
     (prismlauncher.override {jdks = [jdk8 jdk17 jdk19];})
+    dxvk
+    heroic
+    lutris
+    mangohud
+    protonup-qt
+    unstable.bottles
     unstable.path-of-building
+    vkd3d-proton
   ];
 }

@@ -4,13 +4,13 @@
   ...
 }: let
   autostartPrograms = [
+    unstable._1password-gui-beta
+    unstable.barrier
     unstable.discord-canary
+    unstable.jetbrains-toolbox
+    unstable.noisetorch
     unstable.slack
     unstable.telegram-desktop
-    unstable.noisetorch
-    unstable._1password-gui-beta
-    unstable.jetbrains-toolbox
-    unstable.barrier
   ];
 in {
   home.file = builtins.listToAttrs (map

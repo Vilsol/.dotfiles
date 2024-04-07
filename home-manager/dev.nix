@@ -4,27 +4,19 @@
   ...
 }: {
   home.packages = with pkgs; [
-    unstable.jetbrains-toolbox
-    nodejs_18
-    nodePackages.pnpm
     docker-compose
     evans
-    minikube
-    kubernetes-helm
     helmfile
-    kubernetes-helmPlugins.helm-diff
-    protobuf
-    python3Full
-    jdk21
-    upx
-    nix-output-monitor
-    unstable.lens
-    unstable.gh
-    zlib
-    nss
-    rustup
-    gcc
-    unstable.devbox
     imhex
+    jdk21
+    kubernetes-helm
+    kubernetes-helmPlugins.helm-diff
+    minikube
+    python3Full
+    rustup
+    unstable.devbox
+    unstable.gh
+    unstable.jetbrains-toolbox
+    unstable.lens
   ];
 }

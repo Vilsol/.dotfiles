@@ -24,11 +24,11 @@
     mkhl.direnv
     ms-azuretools.vscode-docker
     ms-kubernetes-tools.vscode-kubernetes-tools
-    ms-vscode.hexeditor
+    ms-vscode-remote.remote-containers
     ms-vscode-remote.remote-ssh
     ms-vscode-remote.remote-ssh-edit
+    ms-vscode.hexeditor
     ms-vscode.remote-explorer
-    ms-vscode-remote.remote-containers
     ms-vscode.vscode-typescript-next
     ms-vsliveshare.vsliveshare
     oderwat.indent-rainbow
