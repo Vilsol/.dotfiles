@@ -45,8 +45,6 @@
   ];
 
   services = {
-    mullvad-vpn.enable = true;
-    transmission.enable = false;
     tailscale.enable = true;
   };
 
