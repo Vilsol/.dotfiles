@@ -7,7 +7,6 @@
     docker-compose
     evans
     helmfile
-    imhex
     jdk21
     kubernetes-helm
     kubernetes-helmPlugins.helm-diff

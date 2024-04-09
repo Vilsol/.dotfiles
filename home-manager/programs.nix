@@ -17,15 +17,13 @@
       libreoffice
       pavucontrol
       remmina
-      unstable.obsidian
       unstable.youtube-music
-      wireshark
     ]
     ++ lib.optionals config.full-desktop [
       gwe
       handbrake
       obs-studio
       obs-studio-plugins.obs-pipewire-audio-capture
-      unstable.davinci-resolve
+      # unstable.davinci-resolve
     ];
 }

@@ -4,7 +4,6 @@
     coreutils
     delve
     dig
-    distrobox
     dive
     exiv2
     file
@@ -17,7 +16,6 @@
     kubectl
     neofetch
     nix-index
-    nix-output-monitor
     nix-update
     nixfmt
     nvd

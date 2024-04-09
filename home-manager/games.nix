@@ -7,7 +7,6 @@
     (prismlauncher.override {jdks = [jdk8 jdk17 jdk19];})
     dxvk
     heroic
-    lutris
     mangohud
     protonup-qt
     unstable.bottles
