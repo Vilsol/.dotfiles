@@ -76,8 +76,10 @@
     };
     "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0" = {
       "binding" = "<Shift><Alt>t";
-      "command" = "bash -c 'konsole --new-tab && wmctrl -a \"Konsole\"'";
-      "name" = "Konsole";
+      # "command" = "bash -c 'konsole --new-tab && wmctrl -a \"Konsole\"'";
+      # "name" = "Konsole";
+      "command" = "bash -c 'xdg-open warp://action/new_tab?path=~ && wmctrl -a \"vilsol@\"'";
+      "name" = "Warp";
     };
     "org/gnome/settings-daemon/plugins/media-keys" = {
       "custom-keybindings" = ["/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/"];

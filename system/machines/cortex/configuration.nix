@@ -45,14 +45,16 @@
   };
 
   services = {
+    displayManager = {
+      autoLogin.enable = true;
+      autoLogin.user = "vilsol";
+    };
+
     xserver = {
       enable = true;
 
       displayManager = {
         gdm.enable = true;
-
-        autoLogin.enable = true;
-        autoLogin.user = "vilsol";
       };
       desktopManager.gnome.enable = true;
 

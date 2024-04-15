@@ -20,6 +20,10 @@
 
     kernelModules = ["kvm-intel"];
     extraModulePackages = [];
+
+    kernelParams = [
+      "memmap=1G!53G"
+    ];
   };
 
   fileSystems."/" = {

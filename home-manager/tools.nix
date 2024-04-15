@@ -17,7 +17,7 @@
     neofetch
     nix-index
     nix-update
-    nixfmt
+    nixfmt-rfc-style
     nvd
     p7zip
     unzip
