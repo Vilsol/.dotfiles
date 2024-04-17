@@ -1,4 +1,4 @@
-# Vilsol dotfiles repo
+# .dotfiles
 
 ```bash
 sudo ln -s $(pwd)/system /etc/nixos/system

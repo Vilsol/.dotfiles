@@ -8,7 +8,6 @@
     unstable.barrier
     unstable.discord-canary
     unstable.jetbrains-toolbox
-    unstable.noisetorch
     unstable.slack
     unstable.telegram-desktop
   ];

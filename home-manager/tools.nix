@@ -13,6 +13,7 @@
     htop
     iptables
     jq
+    killall
     kubectl
     neofetch
     nix-index

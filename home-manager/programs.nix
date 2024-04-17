@@ -24,6 +24,6 @@
       handbrake
       obs-studio
       obs-studio-plugins.obs-pipewire-audio-capture
-      # unstable.davinci-resolve
+      unstable.davinci-resolve
     ];
 }

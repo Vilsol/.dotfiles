@@ -20,11 +20,6 @@
       package = unstable._1password;
     };
 
-    noisetorch = {
-      enable = true;
-      package = unstable.noisetorch;
-    };
-
     firefox = {
       enable = true;
       preferences = {
