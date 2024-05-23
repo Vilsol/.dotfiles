@@ -44,6 +44,10 @@
       line_break = {
         disabled = true;
       };
+      cmd_duration = {
+        min_time = 0;
+        show_milliseconds = true;
+      };
     };
   };
 }

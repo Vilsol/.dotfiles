@@ -16,9 +16,24 @@
           program = "/run/current-system/sw/bin/op-ssh-sign";
         };
       };
-      diff.lockdb = {
-        textconf = "bun";
-        binary = true;
+      diff = {
+        tool = "difftastic";
+        external = "difft";
+        lockdb = {
+          textconf = "bun";
+          binary = true;
+        };
+      };
+      difftool = {
+        prompt = false;
+        difftastic = {
+          cmd = "difft \"$LOCAL\" \"$REMOTE\"";
+        };
+      };
+      pager.difftool = true;
+      alias = {
+        dft = "difftool";
+        dlog = "-c diff.external=difft log -p --ext-diff";
       };
     };
   };

@@ -3,6 +3,7 @@
     appimage-run
     coreutils
     delve
+    difftastic
     dig
     dive
     exiv2

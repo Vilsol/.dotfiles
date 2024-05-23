@@ -45,11 +45,6 @@
   };
 
   services = {
-    displayManager = {
-      autoLogin.enable = true;
-      autoLogin.user = "vilsol";
-    };
-
     xserver = {
       enable = true;
 

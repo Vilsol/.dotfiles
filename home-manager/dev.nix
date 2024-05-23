@@ -12,7 +12,6 @@
     kubernetes-helmPlugins.helm-diff
     minikube
     python3Full
-    rustup
     unstable.devbox
     unstable.gh
     unstable.jetbrains-toolbox
