@@ -5,8 +5,7 @@
     systems.url = "github:nix-systems/default";
 
     nixpkgs.url = "github:nixos/nixpkgs/nixos-23.11";
-    # nixpkgs-unstable.url = "flake:nixpkgs/nixpkgs-unstable";
-    nixpkgs-unstable.url = "github:Kiskae/nixpkgs/nvidia/555.42.02";
+    nixpkgs-unstable.url = "flake:nixpkgs/nixpkgs-unstable";
 
     flake-utils.url = "github:numtide/flake-utils";
     flake-utils.inputs.systems.follows = "systems";
