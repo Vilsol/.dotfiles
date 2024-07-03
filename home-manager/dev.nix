@@ -16,5 +16,6 @@
     unstable.gh
     unstable.jetbrains-toolbox
     unstable.lens
+    unstable.nil
   ];
 }

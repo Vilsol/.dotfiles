@@ -10,6 +10,7 @@
     b4dm4n.nixpkgs-fmt
     bbenoist.nix
     brettm12345.nixfmt-vscode
+    continue.continue
     coolbear.systemd-unit-file
     eamodio.gitlens
     fabiospampinato.vscode-diff
@@ -77,6 +78,7 @@ in {
       "[nix]" = {
         "editor.defaultFormatter" = "jnoortheen.nix-ide";
       };
+      "nix.enableLanguageServer" = true;
     };
   };
 }

@@ -6,7 +6,7 @@
   services.xserver.videoDrivers = ["nvidia"];
 
   hardware = {
-    opengl.enable = true;
+    graphics.enable = true;
     nvidia.package = config.boot.kernelPackages.nvidiaPackages.beta;
     nvidia.modesetting.enable = true;
   };
@@ -41,6 +41,7 @@
   environment.sessionVariables = {
     LIBVA_DRIVER_NAME = "nvidia";
     NVD_BACKEND = "direct";
+    WEBKIT_DISABLE_DMABUF_RENDERER = "1";
   };
 
   services.xserver = {

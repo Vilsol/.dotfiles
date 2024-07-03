@@ -6,6 +6,7 @@
 
     nixpkgs.url = "github:nixos/nixpkgs/nixos-23.11";
     nixpkgs-unstable.url = "flake:nixpkgs/nixpkgs-unstable";
+    # nixpkgs-unstable.url = "github:NixOS/nixpkgs/master";
 
     flake-utils.url = "github:numtide/flake-utils";
     flake-utils.inputs.systems.follows = "systems";

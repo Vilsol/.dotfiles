@@ -1,6 +1,6 @@
 {lib, ...}: {
   imports = [
-    # ./anime.nix
+    ./ai.nix
     ./cachix.nix
     ./flatpak.nix
     ./fonts.nix
