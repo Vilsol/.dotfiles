@@ -18,6 +18,7 @@
       pavucontrol
       remmina
       unstable.youtube-music
+      vlc
     ]
     ++ lib.optionals config.full-desktop [
       gwe
