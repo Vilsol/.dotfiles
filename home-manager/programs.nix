@@ -19,6 +19,7 @@
       remmina
       unstable.youtube-music
       vlc
+      easyeffects
     ]
     ++ lib.optionals config.full-desktop [
       gwe
