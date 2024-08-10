@@ -6,6 +6,7 @@
     ./fonts.nix
     ./games.nix
     ./kernel.nix
+    ./minikube.nix
     ./network.nix
     ./os.nix
     ./pcsc.nix

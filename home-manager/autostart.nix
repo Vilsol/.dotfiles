@@ -1,19 +1,19 @@
 {
   lib,
-  unstable,
+  pkgs,
   config,
   ...
 }: let
   autostartPrograms =
     [
-      unstable._1password-gui-beta
+      pkgs._1password-gui-beta
     ]
     ++ lib.optionals config.full-desktop [
-      unstable.barrier
-      unstable.jetbrains-toolbox
-      unstable.slack
-      unstable.telegram-desktop
-      unstable.vesktop
+      pkgs.barrier
+      pkgs.jetbrains-toolbox
+      pkgs.slack
+      pkgs.telegram-desktop
+      pkgs.vesktop
     ];
 in {
   home.file = builtins.listToAttrs (map

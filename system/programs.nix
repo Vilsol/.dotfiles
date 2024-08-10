@@ -1,9 +1,4 @@
-{
-  config,
-  pkgs,
-  unstable,
-  ...
-}: {
+{pkgs, ...}: {
   environment.sessionVariables = {
     MOZ_DISABLE_RDD_SANDBOX = "1";
   };
@@ -11,13 +6,13 @@
   programs = {
     _1password-gui = {
       enable = true;
-      package = unstable._1password-gui-beta.override {polkitPolicyOwners = ["vilsol"];};
+      package = pkgs._1password-gui-beta.override {polkitPolicyOwners = ["vilsol"];};
       polkitPolicyOwners = ["vilsol"];
     };
 
     _1password = {
       enable = true;
-      package = unstable._1password;
+      package = pkgs._1password;
     };
 
     firefox = {

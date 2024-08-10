@@ -1,6 +1,6 @@
 {
-  unstable,
   pkgs,
+  small,
   ...
 }: {
   home.packages = with pkgs; [
@@ -9,8 +9,8 @@
     heroic
     mangohud
     protonup-qt
-    unstable.bottles
-    unstable.path-of-building
+    bottles
+    small.path-of-building
     vkd3d-proton
   ];
 }

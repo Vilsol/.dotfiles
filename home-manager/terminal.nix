@@ -7,7 +7,7 @@
     libsForQt5.breeze-icons
     libsForQt5.konsole
     unstable.warp-terminal
-    unstable.alacritty
-    unstable.kitty
+    alacritty
+    kitty
   ];
 }

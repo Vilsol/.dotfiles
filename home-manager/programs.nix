@@ -1,6 +1,5 @@
 {
   pkgs,
-  unstable,
   lib,
   config,
   ...
@@ -11,21 +10,21 @@
       flameshot
       fontconfig
       gimp
-      gnome.dconf-editor
-      gnome.gnome-tweaks
+      dconf-editor
+      gnome-tweaks
       jellyfin-media-player
       libreoffice
       pavucontrol
       remmina
-      unstable.youtube-music
+      youtube-music
       vlc
       easyeffects
     ]
     ++ lib.optionals config.full-desktop [
       gwe
-      handbrake
+      # handbrake
       obs-studio
       obs-studio-plugins.obs-pipewire-audio-capture
-      unstable.davinci-resolve
+      davinci-resolve
     ];
 }

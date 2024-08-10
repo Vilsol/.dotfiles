@@ -4,9 +4,9 @@
   inputs = {
     systems.url = "github:nix-systems/default";
 
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-23.11";
+    nixpkgs.url = "flake:nixpkgs/nixos-unstable";
     nixpkgs-unstable.url = "flake:nixpkgs/nixpkgs-unstable";
-    # nixpkgs-unstable.url = "github:NixOS/nixpkgs/master";
+    nixpkgs-unstable-small.url = "flake:nixpkgs/nixos-unstable-small";
 
     flake-utils.url = "github:numtide/flake-utils";
     flake-utils.inputs.systems.follows = "systems";
@@ -56,6 +56,7 @@
     flake-utils,
     ragenix,
     nixos-hardware,
+    nixpkgs-unstable-small,
     ...
   } @ inputs:
     flake-utils.lib.eachDefaultSystem (
@@ -92,6 +93,9 @@
               android_sdk.accept_license = true;
             };
           };
+          small = import nixpkgs-unstable-small {
+            inherit system;
+          };
           config.allowUnfree = true;
           config.segger-jlink.acceptLicense = true;
           config.full-desktop = is-full-desktop;
@@ -99,7 +103,7 @@
           extensions = inputs.nix-vscode-extensions.extensions.${system};
 
           buildToolsVersion = "34.0.0";
-          androidComposition = unstable.androidenv.composeAndroidPackages {
+          androidComposition = nixpkgs.androidenv.composeAndroidPackages {
             buildToolsVersions = [buildToolsVersion "28.0.3"];
             platformVersions = ["34" "28"];
             abiVersions = ["armeabi-v7a" "arm64-v8a"];
@@ -107,7 +111,7 @@
           androidSdk = androidComposition.androidsdk;
 
           specialArgs = {
-            inherit system unstable nixpkgs extensions androidSdk nixos-hardware;
+            inherit system unstable nixpkgs extensions androidSdk nixos-hardware small;
           };
 
           modules = [
@@ -156,7 +160,7 @@
             }
           ];
         in
-          nixpkgs-unstable.lib.nixosSystem {
+          nixpkgs.lib.nixosSystem {
             inherit system modules specialArgs;
           };
       in {

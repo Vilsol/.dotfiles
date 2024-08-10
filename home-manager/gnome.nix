@@ -1,6 +1,6 @@
 {pkgs, ...}: {
   home.packages = with pkgs; [
-    gnome.gnome-themes-extra
+    gnome-themes-extra
     gnomeExtensions.advanced-alttab-window-switcher
     gnomeExtensions.always-show-titles-in-overview
     gnomeExtensions.appindicator

@@ -7,8 +7,12 @@
 
   hardware = {
     graphics.enable = true;
-    nvidia.package = config.boot.kernelPackages.nvidiaPackages.beta;
-    nvidia.modesetting.enable = true;
+    nvidia = {
+      package = config.boot.kernelPackages.nvidiaPackages.beta;
+      modesetting.enable = true;
+      open = false;
+    };
+    nvidia-container-toolkit.enable = true;
   };
 
   environment.systemPackages = [

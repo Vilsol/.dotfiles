@@ -1,6 +1,5 @@
 {
   pkgs,
-  unstable,
   config,
   ...
 }: {
@@ -20,7 +19,7 @@
     file.".local/share/barrier/SSL/Fingerprints/Local.txt".source = config.lib.file.mkOutOfStoreSymlink config.age.secrets.barrier-fingerprints.path;
 
     packages = with pkgs; [
-      unstable.barrier
+      barrier
       openssl
     ];
   };

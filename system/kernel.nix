@@ -1,5 +1,5 @@
 {pkgs, ...}: {
-  boot.kernelPackages = pkgs.linuxPackages;
+  boot.kernelPackages = pkgs.linuxKernel.packages.linux_zen;
 
   boot.supportedFilesystems = ["ntfs"];
 

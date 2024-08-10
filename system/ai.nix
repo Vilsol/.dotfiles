@@ -1,6 +1,6 @@
-{config, ...}: {
+{
   services.ollama = {
-    enable = config.full-desktop;
+    enable = false;
     loadModels = ["llama3"];
     acceleration = "cuda";
   };

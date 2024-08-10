@@ -13,9 +13,9 @@
     minikube
     python3Full
     unstable.devbox
-    unstable.gh
-    unstable.jetbrains-toolbox
-    unstable.lens
-    unstable.nil
+    gh
+    jetbrains-toolbox
+    lens
+    nil
   ];
 }
