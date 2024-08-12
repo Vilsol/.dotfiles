@@ -6,4 +6,6 @@
   };
 
   hardware.steam-hardware.enable = true;
+
+  environment.sessionVariables.MANGOHUD = "1";
 }

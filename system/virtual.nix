@@ -1,6 +1,17 @@
-{
-  # virtualisation.virtualbox.host.enable = true;
-  # users.extraGroups.vboxusers.members = ["user-with-access-to-virtualbox"];
-  # virtualisation.virtualbox.guest.enable = true;
-  # virtualisation.virtualbox.guest.x11 = true;
+let
+  enabled = false;
+in {
+  users.extraGroups.vboxusers.members = ["vilsol"];
+  nixpkgs.config.allowUnfree = true;
+  virtualisation.virtualbox = {
+    host = {
+      enable = enabled;
+      enableExtensionPack = enabled;
+    };
+    guest = {
+      enable = enabled;
+      dragAndDrop = enabled;
+      clipboard = enabled;
+    };
+  };
 }

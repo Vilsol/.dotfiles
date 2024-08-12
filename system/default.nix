@@ -2,6 +2,7 @@
   imports = [
     ./ai.nix
     ./cachix.nix
+    ./common.nix
     ./flatpak.nix
     ./fonts.nix
     ./games.nix

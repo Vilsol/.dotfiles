@@ -1,7 +1,11 @@
 {pkgs, ...}: {
-  boot.kernelPackages = pkgs.linuxKernel.packages.linux_zen;
-
-  boot.supportedFilesystems = ["ntfs"];
+  boot = {
+    kernelPackages = pkgs.linuxKernel.packages.linux_zen;
+    supportedFilesystems = ["ntfs"];
+    loader.systemd-boot.enable = true;
+    loader.efi.canTouchEfiVariables = true;
+    initrd.systemd.enable = true;
+  };
 
   nixpkgs.config.packageOverrides = pkgs: {
     intel-vaapi-driver = pkgs.intel-vaapi-driver.override {enableHybridCodec = true;};

@@ -1,6 +1,7 @@
 {pkgs, ...}: {
   home.packages = with pkgs; [
     goverlay
+    lm_sensors
   ];
 
   programs.mangohud = {

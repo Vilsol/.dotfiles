@@ -1,10 +1,13 @@
 {
   systemd.services.NetworkManager-wait-online.enable = false;
 
-  networking.nameservers = [
-    "1.1.1.1"
-    "8.8.8.8"
-  ];
-
-  networking.networkmanager.dns = "none";
+  networking = {
+    networkmanager.dns = "none";
+    networkmanager.enable = true;
+    firewall.enable = false;
+    nameservers = [
+      "1.1.1.1"
+      "8.8.8.8"
+    ];
+  };
 }
