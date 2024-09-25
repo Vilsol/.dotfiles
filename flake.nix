@@ -4,7 +4,7 @@
   inputs = {
     systems.url = "github:nix-systems/default";
 
-    nixpkgs.url = "flake:nixpkgs/nixos-unstable";
+    nixpkgs.url = "flake:nixpkgs/nixpkgs-unstable";
     nixpkgs-unstable.url = "flake:nixpkgs/nixpkgs-unstable";
     nixpkgs-unstable-small.url = "flake:nixpkgs/nixos-unstable-small";
 
@@ -43,6 +43,8 @@
       url = "github:cachix/pre-commit-hooks.nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    srvos.url = "github:nix-community/srvos";
   };
 
   outputs = {
@@ -57,12 +59,17 @@
     ragenix,
     nixos-hardware,
     nixpkgs-unstable-small,
+    srvos,
     ...
   } @ inputs:
     flake-utils.lib.eachDefaultSystem (
       system: let
-        pkgs = import nixpkgs {
+        pkgs = import nixpkgs-unstable {
           inherit system;
+          config = {
+            allowUnfree = true;
+            android_sdk.accept_license = true;
+          };
         };
       in {
         checks = {
@@ -89,32 +96,40 @@
             inherit system;
             config = {
               allowUnfree = true;
-              permittedInsecurePackages = ["electron-25.9.0"];
               android_sdk.accept_license = true;
             };
           };
           small = import nixpkgs-unstable-small {
             inherit system;
+            config = {
+              allowUnfree = true;
+              android_sdk.accept_license = true;
+            };
           };
           config.allowUnfree = true;
           config.segger-jlink.acceptLicense = true;
           config.full-desktop = is-full-desktop;
+          config.android_sdk.accept_license = true;
 
           extensions = inputs.nix-vscode-extensions.extensions.${system};
 
           buildToolsVersion = "34.0.0";
-          androidComposition = nixpkgs.androidenv.composeAndroidPackages {
+          androidComposition = unstable.androidenv.composeAndroidPackages {
             buildToolsVersions = [buildToolsVersion "28.0.3"];
             platformVersions = ["34" "28"];
             abiVersions = ["armeabi-v7a" "arm64-v8a"];
+            includeEmulator = true;
+            extraLicenses = [
+              "android-sdk-license"
+            ];
           };
-          androidSdk = androidComposition.androidsdk;
 
           specialArgs = {
-            inherit system unstable nixpkgs extensions androidSdk nixos-hardware small;
+            inherit system unstable nixpkgs extensions androidComposition nixos-hardware small;
           };
 
           modules = [
+            srvos.nixosModules.desktop
             nix-flatpak.nixosModules.nix-flatpak
             ragenix.nixosModules.default
             {

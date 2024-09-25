@@ -36,10 +36,10 @@
           appId = "org.darktable.Darktable";
           origin = "flathub";
         }
-        {
-          appId = "com.leinardi.gwe";
-          origin = "flathub";
-        }
+        # {
+        #   appId = "com.leinardi.gwe";
+        #   origin = "flathub";
+        # }
       ];
   };
 }

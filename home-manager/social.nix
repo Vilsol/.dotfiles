@@ -4,7 +4,7 @@
   ...
 }: {
   home.packages = with pkgs; [
-    element-desktop
+    # element-desktop
     slack
     telegram-desktop
     zapzap

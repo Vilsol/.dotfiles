@@ -21,7 +21,7 @@
       easyeffects
     ]
     ++ lib.optionals config.full-desktop [
-      gwe
+      # gwe
       # handbrake
       obs-studio
       obs-studio-plugins.obs-pipewire-audio-capture

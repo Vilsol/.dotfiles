@@ -17,5 +17,6 @@
     jetbrains-toolbox
     lens
     nil
+    crane
   ];
 }

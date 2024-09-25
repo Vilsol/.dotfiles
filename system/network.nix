@@ -2,7 +2,7 @@
   systemd.services.NetworkManager-wait-online.enable = false;
 
   networking = {
-    networkmanager.dns = "none";
+    # networkmanager.dns = "none";
     networkmanager.enable = true;
     firewall.enable = false;
     nameservers = [

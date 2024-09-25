@@ -1,4 +1,9 @@
-{pkgs, ...}: {
+{
+  pkgs,
+  config,
+  androidComposition,
+  ...
+}: {
   environment.sessionVariables = {
     MOZ_DISABLE_RDD_SANDBOX = "1";
   };
@@ -48,7 +53,17 @@
     enable = true;
   };
 
-  users.users.vilsol.extraGroups = ["docker"];
+  environment.systemPackages = with pkgs;
+    lib.optionals config.full-desktop [
+      flutter
+      android-tools
+      (androidStudioPackages.beta.full.withSdk androidComposition.androidsdk)
+    ];
+  programs.adb.enable = true;
+  users.users.vilsol.extraGroups = [
+    "docker"
+    "adbusers"
+  ];
 
   nixpkgs.config = {
     permittedInsecurePackages = [
@@ -64,9 +79,9 @@
     enable = true;
   };
 
-  programs.hyprland = {
-    enable = true;
-    xwayland.enable = true;
-  };
-  environment.sessionVariables.NIXOS_OZONE_WL = "1";
+  # programs.hyprland = {
+  #   enable = true;
+  #   xwayland.enable = true;
+  # };
+  # environment.sessionVariables.NIXOS_OZONE_WL = "1";
 }
