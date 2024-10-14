@@ -1,14 +1,10 @@
-{
-  pkgs,
-  unstable,
-  ...
-}: {
+{pkgs, ...}: {
   home.packages = with pkgs; [
     # element-desktop
     slack
     telegram-desktop
     zapzap
     quasselClient
-    unstable.vesktop
+    vesktop
   ];
 }

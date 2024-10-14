@@ -1,12 +1,8 @@
-{
-  pkgs,
-  unstable,
-  ...
-}: {
+{pkgs, ...}: {
   home.packages = with pkgs; [
     libsForQt5.breeze-icons
     libsForQt5.konsole
-    unstable.warp-terminal
+    warp-terminal
     alacritty
     kitty
   ];

@@ -15,6 +15,7 @@
     ./programs.nix
     ./shell.nix
     ./virtual.nix
+    # ./wayland.nix
   ];
 
   options = {

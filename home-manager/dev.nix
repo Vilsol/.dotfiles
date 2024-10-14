@@ -1,8 +1,4 @@
-{
-  pkgs,
-  unstable,
-  ...
-}: {
+{pkgs, ...}: {
   home.packages = with pkgs; [
     docker-compose
     evans
@@ -12,7 +8,7 @@
     kubernetes-helmPlugins.helm-diff
     minikube
     python3Full
-    unstable.devbox
+    devbox
     gh
     jetbrains-toolbox
     lens

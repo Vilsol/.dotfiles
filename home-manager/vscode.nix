@@ -14,7 +14,7 @@
     coolbear.systemd-unit-file
     eamodio.gitlens
     fabiospampinato.vscode-diff
-    golang.go-nightly
+    golang.go
     huber-baste.msgpack
     iliazeus.vscode-ansi
     jetpack-io.devbox

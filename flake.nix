@@ -43,8 +43,6 @@
       url = "github:cachix/pre-commit-hooks.nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
-    srvos.url = "github:nix-community/srvos";
   };
 
   outputs = {
@@ -59,7 +57,6 @@
     ragenix,
     nixos-hardware,
     nixpkgs-unstable-small,
-    srvos,
     ...
   } @ inputs:
     flake-utils.lib.eachDefaultSystem (
@@ -129,7 +126,6 @@
           };
 
           modules = [
-            srvos.nixosModules.desktop
             nix-flatpak.nixosModules.nix-flatpak
             ragenix.nixosModules.default
             {
