@@ -45,4 +45,6 @@
   nixpkgs.config.allowUnfree = true;
 
   services.fwupd.enable = true;
+
+  nix.settings.trusted-users = ["vilsol"];
 }

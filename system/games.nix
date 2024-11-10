@@ -8,4 +8,6 @@
   hardware.steam-hardware.enable = true;
 
   environment.sessionVariables.MANGOHUD = "1";
+
+  programs.gamescope.enable = true;
 }

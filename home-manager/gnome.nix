@@ -7,7 +7,7 @@
     gnomeExtensions.blur-my-shell
     gnomeExtensions.grand-theft-focus
     gnomeExtensions.no-overview
-    gnomeExtensions.openweather
+    gnomeExtensions.openweather-refined
     gnomeExtensions.removable-drive-menu
     gnomeExtensions.tailscale-status
     gnomeExtensions.wireless-hid

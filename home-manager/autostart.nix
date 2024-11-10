@@ -9,7 +9,7 @@
       pkgs._1password-gui-beta
     ]
     ++ lib.optionals config.full-desktop [
-      pkgs.barrier
+      pkgs.input-leap
       pkgs.jetbrains-toolbox
       pkgs.slack
       pkgs.telegram-desktop

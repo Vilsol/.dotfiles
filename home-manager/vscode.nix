@@ -14,6 +14,7 @@
     coolbear.systemd-unit-file
     eamodio.gitlens
     fabiospampinato.vscode-diff
+    github.copilot
     golang.go
     huber-baste.msgpack
     iliazeus.vscode-ansi

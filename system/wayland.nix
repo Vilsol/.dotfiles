@@ -3,5 +3,7 @@
     enable = true;
     xwayland.enable = true;
   };
-  environment.sessionVariables.NIXOS_OZONE_WL = "1";
+
+  # This breaks too much shit right now
+  # environment.sessionVariables.NIXOS_OZONE_WL = "1";
 }

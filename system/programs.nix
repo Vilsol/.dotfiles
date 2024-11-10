@@ -27,13 +27,14 @@
         "media.ffmpeg.vaapi.enabled" = true;
         "media.rdd-ffmpeg.enabled" = true;
         "gfx.x11-egl.force-enabled" = true;
+        "apz.gtk.kinetic_scroll.enabled" = false;
       };
     };
 
     nix-ld.enable = true;
   };
 
-  nix.package = pkgs.nixFlakes;
+  nix.package = pkgs.nixVersions.stable;
   nix.settings.experimental-features = [
     "nix-command"
     "flakes"

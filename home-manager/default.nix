@@ -1,13 +1,13 @@
 {
   imports = [
     ./autostart.nix
-    ./barrier.nix
     ./dev.nix
     ./files.nix
     ./games.nix
     ./git.nix
     ./gnome.nix
     ./home.nix
+    ./kvm.nix
     ./mangohud.nix
     ./programs.nix
     ./social.nix
