@@ -14,5 +14,7 @@
     lens
     nil
     crane
+    bazelisk
+    jujutsu
   ];
 }

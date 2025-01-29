@@ -1,11 +1,11 @@
-{
+{config, ...}: {
   services.ollama = {
-    enable = false;
+    enable = config.full-desktop;
     loadModels = [
-      "llama3.2:8b"
-      "starcoder2:3b"
-      "codegemma:2b"
+      "deepseek-r1:32b"
+      "qwen2.5-coder:7b"
     ];
     acceleration = "cuda";
   };
+  services.open-webui.enable = config.full-desktop;
 }

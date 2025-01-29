@@ -3,7 +3,7 @@
     ./ai.nix
     ./cachix.nix
     ./common.nix
-    ./flatpak.nix
+    # ./flatpak.nix
     ./fonts.nix
     ./games.nix
     ./kernel.nix

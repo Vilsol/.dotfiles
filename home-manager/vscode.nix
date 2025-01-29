@@ -44,6 +44,7 @@
     tamasfe.even-better-toml
     tangzx.emmylua
     tilt-dev.tiltfile
+    pkgs.vscode-extensions.visualjj.visualjj
     vrtlabs.vscode-lsl
     weaveworks.vscode-gitops-tools
     zxh404.vscode-proto3

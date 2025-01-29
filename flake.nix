@@ -4,9 +4,7 @@
   inputs = {
     systems.url = "github:nix-systems/default";
 
-    nixpkgs.url = "flake:nixpkgs/nixpkgs-unstable";
-    nixpkgs-unstable.url = "flake:nixpkgs/nixpkgs-unstable";
-    nixpkgs-unstable-small.url = "flake:nixpkgs/nixos-unstable-small";
+    nixpkgs.url = "flake:nixpkgs/nixos-unstable";
 
     flake-utils.url = "github:numtide/flake-utils";
     flake-utils.inputs.systems.follows = "systems";
@@ -48,20 +46,18 @@
   outputs = {
     self,
     nixpkgs,
-    nixpkgs-unstable,
     home-manager,
-    nix-flatpak,
+    # nix-flatpak,
     nix-vscode-extensions,
     pre-commit-hooks,
     flake-utils,
     ragenix,
     nixos-hardware,
-    nixpkgs-unstable-small,
     ...
   } @ inputs:
     flake-utils.lib.eachDefaultSystem (
       system: let
-        pkgs = import nixpkgs-unstable {
+        pkgs = import nixpkgs {
           inherit system;
           config = {
             allowUnfree = true;
@@ -89,29 +85,18 @@
     // (
       let
         mkSystem = system: name: is-full-desktop: let
-          unstable = import nixpkgs-unstable {
+          pkgs = import nixpkgs {
             inherit system;
             config = {
               allowUnfree = true;
               android_sdk.accept_license = true;
             };
           };
-          small = import nixpkgs-unstable-small {
-            inherit system;
-            config = {
-              allowUnfree = true;
-              android_sdk.accept_license = true;
-            };
-          };
-          config.allowUnfree = true;
-          config.segger-jlink.acceptLicense = true;
-          config.full-desktop = is-full-desktop;
-          config.android_sdk.accept_license = true;
 
           extensions = inputs.nix-vscode-extensions.extensions.${system};
 
           buildToolsVersion = "34.0.0";
-          androidComposition = unstable.androidenv.composeAndroidPackages {
+          androidComposition = pkgs.androidenv.composeAndroidPackages {
             buildToolsVersions = [buildToolsVersion "28.0.3"];
             platformVersions = ["34" "28"];
             abiVersions = ["armeabi-v7a" "arm64-v8a"];
@@ -122,11 +107,11 @@
           };
 
           specialArgs = {
-            inherit system unstable nixpkgs extensions androidComposition nixos-hardware small;
+            inherit system nixpkgs extensions androidComposition nixos-hardware;
           };
 
           modules = [
-            nix-flatpak.nixosModules.nix-flatpak
+            # nix-flatpak.nixosModules.nix-flatpak
             ragenix.nixosModules.default
             {
               config.environment.systemPackages = [ragenix.packages.${system}.default];

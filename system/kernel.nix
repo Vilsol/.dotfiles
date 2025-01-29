@@ -1,6 +1,6 @@
 {pkgs, ...}: {
   boot = {
-    kernelPackages = pkgs.linuxKernel.packages.linux_zen;
+    kernelPackages = pkgs.linuxPackages_latest;
     supportedFilesystems = ["ntfs"];
     loader.systemd-boot.enable = true;
     loader.efi.canTouchEfiVariables = true;

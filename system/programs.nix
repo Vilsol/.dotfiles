@@ -17,7 +17,7 @@
 
     _1password = {
       enable = true;
-      package = pkgs._1password;
+      package = pkgs._1password-cli;
     };
 
     firefox = {
@@ -64,6 +64,7 @@
   users.users.vilsol.extraGroups = [
     "docker"
     "adbusers"
+    "dialout"
   ];
 
   nixpkgs.config = {

@@ -1,16 +1,12 @@
-{
-  pkgs,
-  small,
-  ...
-}: {
+{pkgs, ...}: {
   home.packages = with pkgs; [
     (prismlauncher.override {jdks = [jdk8 jdk17];})
     dxvk
-    heroic
+    # heroic
     mangohud
     protonup-qt
     bottles
-    small.path-of-building
+    path-of-building
     vkd3d-proton
   ];
 }
