@@ -14,6 +14,7 @@
     ./pipewire.nix
     ./programs.nix
     ./shell.nix
+    ./ssh.nix
     ./virtual.nix
     ./wayland.nix
   ];
