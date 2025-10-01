@@ -1,9 +1,10 @@
 {
   programs.zsh = {
     enable = true;
-    initExtra = ''
+    initContent = ''
       bindkey "^[[1;5C" forward-word
       bindkey "^[[1;5D" backward-word
+      eval "$(mise activate zsh)"
     '';
     historySubstringSearch = {
       enable = true;
@@ -13,8 +14,12 @@
     };
     syntaxHighlighting.enable = true;
     shellAliases = {
-      up = "bash " + (./. + "/../tools/up.sh");
-      upgrade = "pushd /home/vilsol/.dotfiles && nix flake update && popd && up";
+      # up = "bash " + (./. + "/../tools/up.sh");
+      # upgrade = "pushd /home/vilsol/.dotfiles && nix flake update && popd && up";
+      up = "nh os switch ~/.dotfiles -v --ask";
+      upb = "nh os boot ~/.dotfiles -v --ask";
+      upgrade = "nh os switch ~/.dotfiles -v --ask -u";
+      upgradeb = "nh os boot ~/.dotfiles -v --ask -u";
     };
     oh-my-zsh = {
       enable = true;

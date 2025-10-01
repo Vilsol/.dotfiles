@@ -5,13 +5,13 @@
   ...
 }: {
   environment.sessionVariables = {
-    MOZ_DISABLE_RDD_SANDBOX = "1";
+    MOZ_ENABLE_WAYLAND = "1";
   };
 
   programs = {
     _1password-gui = {
       enable = true;
-      package = pkgs._1password-gui-beta.override {polkitPolicyOwners = ["vilsol"];};
+      # package = pkgs._1password-gui-beta.override {polkitPolicyOwners = ["vilsol"];};
       polkitPolicyOwners = ["vilsol"];
     };
 
@@ -24,6 +24,7 @@
       enable = true;
       preferences = {
         "media.hardwaremediakeys.enabled" = false;
+        "media.hardware-video-decoding.force-enabled" = true;
         "media.ffmpeg.vaapi.enabled" = true;
         "media.rdd-ffmpeg.enabled" = true;
         "gfx.x11-egl.force-enabled" = true;
@@ -34,7 +35,7 @@
     nix-ld.enable = true;
   };
 
-  nix.package = pkgs.nixVersions.stable;
+  nix.package = pkgs.lix;
   nix.settings.experimental-features = [
     "nix-command"
     "flakes"
@@ -59,6 +60,7 @@
       flutter
       android-tools
       (androidStudioPackages.beta.full.withSdk androidComposition.androidsdk)
+      # pkgs.nur.repos.xddxdd.flaresolverr-21hsmw
     ];
   programs.adb.enable = true;
   users.users.vilsol.extraGroups = [
@@ -73,11 +75,15 @@
       "electron-24.8.6"
     ];
 
-    allowUnfree = true;
     segger-jlink.acceptLicense = true;
   };
 
   programs.coolercontrol = {
     enable = true;
+  };
+
+  programs.kdeconnect = {
+    enable = true;
+    package = pkgs.gnomeExtensions.gsconnect;
   };
 }

@@ -3,15 +3,15 @@
   i18n.defaultLocale = "en_US.UTF-8";
 
   i18n.extraLocaleSettings = {
-    LC_ADDRESS = "en_US.UTF-8";
-    LC_IDENTIFICATION = "en_US.UTF-8";
+    LC_ADDRESS = "lv_LV.UTF-8";
+    LC_IDENTIFICATION = "lv_LV.UTF-8";
     LC_MEASUREMENT = "lv_LV.UTF-8";
-    LC_MONETARY = "en_US.UTF-8";
-    LC_NAME = "en_US.UTF-8";
-    LC_NUMERIC = "en_US.UTF-8";
+    LC_MONETARY = "lv_LV.UTF-8";
+    LC_NAME = "lv_LV.UTF-8";
+    LC_NUMERIC = "lv_LV.UTF-8";
     LC_PAPER = "lv_LV.UTF-8";
     LC_TELEPHONE = "lv_LV.UTF-8";
-    LC_TIME = "en_US.UTF-8";
+    LC_TIME = "lv_LV.UTF-8";
   };
 
   services = {
@@ -28,15 +28,22 @@
       alsa.support32Bit = true;
       pulse.enable = true;
     };
+
+    # Enable background system updates
+    # nixos-background-updates = {
+    #   enable = true;
+    #   time = "05:00";  # Run at 5 AM
+    #   randomizedDelay = "30min";  # Add up to 30 min random delay
+    # };
   };
 
-  hardware.pulseaudio.enable = false;
+  services.pulseaudio.enable = false;
   security.rtkit.enable = true;
 
   users.users.vilsol = {
     isNormalUser = true;
     description = "Vilsol";
-    extraGroups = ["networkmanager" "wheel"];
+    extraGroups = ["networkmanager" "wheel" "ydotool" "uinput"];
   };
 
   systemd.services."getty@tty1".enable = false;
@@ -47,4 +54,10 @@
   services.fwupd.enable = true;
 
   nix.settings.trusted-users = ["vilsol"];
+
+  boot.kernel.sysctl = {
+    "fs.inotify.max_user_watches" = "1048576";
+  };
+
+  programs.ydotool.enable = true;
 }

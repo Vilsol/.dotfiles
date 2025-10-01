@@ -6,7 +6,7 @@
 
     gc = {
       automatic = true;
-      dates = "00:00";
+      dates = "weekly";
       options = "--delete-older-than 14d";
     };
   };
@@ -17,5 +17,9 @@
       theme = "breeze";
     };
     kernelParams = ["quiet" "udev.log_level=3"];
+  };
+
+  programs.nh = {
+    enable = true;
   };
 }

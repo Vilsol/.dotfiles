@@ -6,7 +6,7 @@
 
   programs.mangohud = {
     enable = true;
-    enableSessionWide = false;
+    enableSessionWide = true;
     settings = {
       arch = true;
       background_alpha = 0.4;
@@ -38,6 +38,7 @@
       fps = true;
       frametime_color = "00ff00";
       frame_timing = 1;
+      frame_timing_detailed = 1;
       gl_vsync = -1;
 
       gpu_color = "2e9762";
@@ -57,6 +58,8 @@
       io_write = true;
 
       legacy_layout = false;
+
+      no_display = true;
 
       output_folder = "/home/vilsol";
       position = "top-left";

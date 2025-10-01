@@ -19,26 +19,40 @@
 
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
 
-    agenix = {
-      url = "github:ryantm/agenix";
-      inputs = {
-        nixpkgs.follows = "nixpkgs";
-        home-manager.follows = "home-manager";
-        systems.follows = "systems";
-      };
-    };
+    # agenix = {
+    #   url = "github:ryantm/agenix";
+    #   inputs = {
+    #     nixpkgs.follows = "nixpkgs";
+    #     home-manager.follows = "home-manager";
+    #     systems.follows = "systems";
+    #   };
+    # };
 
-    ragenix = {
-      url = "github:yaxitech/ragenix";
-      inputs = {
-        nixpkgs.follows = "nixpkgs";
-        agenix.follows = "agenix";
-        flake-utils.follows = "flake-utils";
-      };
-    };
+    # ragenix = {
+    #   url = "github:yaxitech/ragenix";
+    #   inputs = {
+    #     nixpkgs.follows = "nixpkgs";
+    #     agenix.follows = "agenix";
+    #     flake-utils.follows = "flake-utils";
+    #   };
+    # };
 
     pre-commit-hooks = {
       url = "github:cachix/pre-commit-hooks.nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    # lix-module = {
+    #   url = "git+https://git.lix.systems/lix-project/nixos-module";
+    #   inputs.nixpkgs.follows = "nixpkgs";
+    #   inputs.lix = {
+    #     url = "git+https://git.lix.systems/lix-project/lix";
+    #     inputs.nixpkgs.follows = "nixpkgs";
+    #   };
+    # };
+
+    nur = {
+      url = "github:nix-community/NUR";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
@@ -51,8 +65,10 @@
     nix-vscode-extensions,
     pre-commit-hooks,
     flake-utils,
-    ragenix,
+    # ragenix,
     nixos-hardware,
+    # lix-module,
+    nur,
     ...
   } @ inputs:
     flake-utils.lib.eachDefaultSystem (
@@ -111,10 +127,12 @@
           };
 
           modules = [
+            # lix-module.nixosModules.default
+
             # nix-flatpak.nixosModules.nix-flatpak
-            ragenix.nixosModules.default
+            # ragenix.nixosModules.default
             {
-              config.environment.systemPackages = [ragenix.packages.${system}.default];
+              # config.environment.systemPackages = [ragenix.packages.${system}.default];
               config.full-desktop = is-full-desktop;
             }
 
@@ -132,15 +150,15 @@
                   ...
                 }: {
                   imports = [
-                    ragenix.homeManagerModules.default
+                    # ragenix.homeManagerModules.default
                     ./system/home-manager/default.nix
                   ];
 
                   config = {
-                    age = {
-                      secretsDir = "${config.home.homeDirectory}/.agenix/agenix";
-                      secretsMountPoint = "${config.home.homeDirectory}/.agenix/agenix.d";
-                    };
+                    # age = {
+                    #   secretsDir = "${config.home.homeDirectory}/.agenix/agenix";
+                    #   secretsMountPoint = "${config.home.homeDirectory}/.agenix/agenix.d";
+                    # };
                   };
 
                   options = {
@@ -154,6 +172,12 @@
                 extraSpecialArgs = specialArgs;
               };
             }
+
+            nur.modules.nixos.default
+            #nur.legacyPackages."${system}".repos.xddxdd.modules.flaresolverr-21hsmw
+            ({ pkgs, ... }: {
+              environment.systemPackages = [ pkgs.nur.repos.xddxdd.flaresolverr-21hsmw ];
+            })
           ];
         in
           nixpkgs.lib.nixosSystem {

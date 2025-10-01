@@ -21,6 +21,9 @@
     kochi-substitute
     source-code-pro
     ttf_bitstream_vera
+    noto-fonts
+    noto-fonts-cjk-sans
+    noto-fonts-emoji
   ];
 
   i18n.inputMethod.ibus.engines = with pkgs.ibus-engines; [mozc];

@@ -6,12 +6,9 @@
 }: let
   autostartPrograms =
     [
-      pkgs._1password-gui-beta
+      pkgs._1password-gui
     ]
     ++ lib.optionals config.full-desktop [
-      pkgs.input-leap
-      pkgs.jetbrains-toolbox
-      pkgs.slack
       pkgs.telegram-desktop
       pkgs.vesktop
     ];

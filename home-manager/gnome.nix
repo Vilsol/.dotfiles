@@ -9,6 +9,7 @@
     gnomeExtensions.no-overview
     gnomeExtensions.openweather-refined
     gnomeExtensions.removable-drive-menu
+    gnomeExtensions.spotify-controls
     gnomeExtensions.tailscale-status
     gnomeExtensions.wireless-hid
   ];
@@ -52,6 +53,7 @@
         "no-overview@fthx"
         "blur-my-shell@aunetx"
         "grand-theft-focus@zalckos.github.com"
+        "spotify-controls@Sonath21"
       ];
     };
     "org/gnome/shell/extensions/advanced-alt-tab-window-switcher" = {

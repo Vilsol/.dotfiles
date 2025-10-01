@@ -7,7 +7,6 @@
     ./git.nix
     ./gnome.nix
     ./home.nix
-    ./kvm.nix
     ./mangohud.nix
     ./programs.nix
     ./social.nix

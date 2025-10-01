@@ -1,20 +1,23 @@
 {pkgs, ...}: {
   home.packages = with pkgs; [
+    bazelisk
+    crane
+    devbox
     docker-compose
     evans
+    gh
+    go
     helmfile
     jdk21
+    jetbrains-toolbox
+    jujutsu
     kubernetes-helm
     kubernetes-helmPlugins.helm-diff
-    minikube
-    python3Full
-    devbox
-    gh
-    jetbrains-toolbox
     lens
+    minikube
+    mise
     nil
-    crane
-    bazelisk
-    jujutsu
+    python3Minimal
+    libtas
   ];
 }

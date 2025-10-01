@@ -1,6 +1,7 @@
 {lib, ...}: {
   imports = [
     ./ai.nix
+    # ./background-updates.nix
     ./cachix.nix
     ./common.nix
     # ./flatpak.nix
