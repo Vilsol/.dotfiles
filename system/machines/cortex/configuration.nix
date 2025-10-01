@@ -41,7 +41,7 @@
 
   # Hardware support
   hardware.enableRedistributableFirmware = true;
-  
+
   # WiFi driver parameters
   boot.extraModprobeConfig = ''
     # RTL8922AE WiFi 7 adapter stability
@@ -49,17 +49,17 @@
     options rtw89_pci disable_aspm_l1=1 disable_aspm_l1ss=1
     options rtw89_8922a rtw89_disable_ps_mode=1
   '';
-  
+
   # Network configuration
   networking.networkmanager = {
     enable = true;
     wifi.powersave = false;
     wifi.scanRandMacAddress = false;
   };
-  
+
   # Kernel parameters for stability
-  boot.kernelParams = [ 
+  boot.kernelParams = [
     "pcie_aspm=off"
-    "iwlwifi.power_save=0"  # Generic WiFi power save disable
+    "iwlwifi.power_save=0" # Generic WiFi power save disable
   ];
 }

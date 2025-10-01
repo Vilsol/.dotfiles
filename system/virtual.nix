@@ -1,6 +1,4 @@
-{pkgs, ...}:
-
-let
+{pkgs, ...}: let
   enabled = false;
 in {
   users.extraGroups.vboxusers.members = ["vilsol"];
@@ -30,10 +28,12 @@ in {
       swtpm.enable = true;
       ovmf = {
         enable = true;
-        packages = [(pkgs.OVMF.override {
-          secureBoot = true;
-          tpmSupport = true;
-        }).fd];
+        packages = [
+          (pkgs.OVMF.override {
+            secureBoot = true;
+            tpmSupport = true;
+          }).fd
+        ];
       };
     };
   };

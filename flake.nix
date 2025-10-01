@@ -175,8 +175,8 @@
 
             nur.modules.nixos.default
             #nur.legacyPackages."${system}".repos.xddxdd.modules.flaresolverr-21hsmw
-            ({ pkgs, ... }: {
-              environment.systemPackages = [ pkgs.nur.repos.xddxdd.flaresolverr-21hsmw ];
+            ({pkgs, ...}: {
+              environment.systemPackages = [pkgs.nur.repos.xddxdd.flaresolverr-21hsmw];
             })
           ];
         in

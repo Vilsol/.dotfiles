@@ -14,7 +14,7 @@
     coolbear.systemd-unit-file
     eamodio.gitlens
     fabiospampinato.vscode-diff
-    (github.copilot.override { meta.license = [ ]; })
+    (github.copilot.override {meta.license = [];})
     golang.go
     huber-baste.msgpack
     iliazeus.vscode-ansi
@@ -22,15 +22,15 @@
     jnoortheen.nix-ide
     kraftwer1.darcula-extra
     mechatroner.rainbow-csv
-    (mhutchie.git-graph.override { meta.license = [ ]; })
+    (mhutchie.git-graph.override {meta.license = [];})
     mkhl.direnv
     ms-azuretools.vscode-docker
     ms-kubernetes-tools.vscode-kubernetes-tools
-    (ms-vscode-remote.remote-containers.override { meta.license = [ ]; })
-    (ms-vscode-remote.remote-ssh.override { meta.license = [ ]; })
-    (ms-vscode-remote.remote-ssh-edit.override { meta.license = [ ]; })
+    (ms-vscode-remote.remote-containers.override {meta.license = [];})
+    (ms-vscode-remote.remote-ssh.override {meta.license = [];})
+    (ms-vscode-remote.remote-ssh-edit.override {meta.license = [];})
     ms-vscode.hexeditor
-    (ms-vscode.remote-explorer.override { meta.license = [ ]; })
+    (ms-vscode.remote-explorer.override {meta.license = [];})
     ms-vscode.vscode-typescript-next
     ms-vsliveshare.vsliveshare
     oderwat.indent-rainbow
