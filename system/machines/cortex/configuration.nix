@@ -24,10 +24,11 @@
 
   system.stateVersion = "23.05";
 
-  # Keyboard
+  # Keyboard & Sonoff Dongle-M
   services.udev.extraRules = ''
     SUBSYSTEMS=="usb", ATTRS{idVendor}=="3434", ATTRS{idProduct}=="0860", TAG+="uaccess", GROUP="dialout", MODE="0660"
     SUBSYSTEMS=="usb", ATTRS{idVendor}=="0483", ATTRS{idProduct}=="df11", TAG+="uaccess", GROUP="dialout", MODE="0660"
+    SUBSYSTEMS=="usb", ATTRS{idVendor}=="10c4", ATTRS{idProduct}=="ea60", TAG+="uaccess", GROUP="dialout", MODE="0660"
   '';
 
   services.sunshine = {

@@ -23,7 +23,7 @@
     ttf_bitstream_vera
     noto-fonts
     noto-fonts-cjk-sans
-    noto-fonts-emoji
+    noto-fonts-color-emoji
   ];
 
   i18n.inputMethod.ibus.engines = with pkgs.ibus-engines; [mozc];

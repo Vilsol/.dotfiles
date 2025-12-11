@@ -10,7 +10,7 @@
     file
     fzf
     gdu
-    glxinfo
+    mesa-demos
     htop
     iptables
     jq

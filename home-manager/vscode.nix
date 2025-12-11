@@ -16,11 +16,9 @@
     fabiospampinato.vscode-diff
     (github.copilot.override {meta.license = [];})
     golang.go
-    huber-baste.msgpack
     iliazeus.vscode-ansi
     jetpack-io.devbox
     jnoortheen.nix-ide
-    kraftwer1.darcula-extra
     mechatroner.rainbow-csv
     (mhutchie.git-graph.override {meta.license = [];})
     mkhl.direnv

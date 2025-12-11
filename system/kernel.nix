@@ -1,6 +1,6 @@
 {pkgs, ...}: {
   boot = {
-    kernelPackages = pkgs.linuxPackages_zen;
+    kernelPackages = pkgs.linuxPackages_cachyos-lto;
     supportedFilesystems = ["ntfs"];
     loader.systemd-boot.enable = true;
     loader.efi.canTouchEfiVariables = true;
@@ -15,8 +15,10 @@
     enable = true;
     extraPackages = with pkgs; [
       intel-media-driver
-      vaapiVdpau
+      libva-vdpau-driver
       libvdpau-va-gl
     ];
   };
+
+  services.scx.enable = true;
 }

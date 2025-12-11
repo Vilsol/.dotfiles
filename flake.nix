@@ -55,6 +55,10 @@
       url = "github:nix-community/NUR";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    chaotic = {
+      url = "github:chaotic-cx/nyx/nyxpkgs-unstable";
+    };
   };
 
   outputs = {
@@ -69,6 +73,7 @@
     nixos-hardware,
     # lix-module,
     nur,
+    chaotic,
     ...
   } @ inputs:
     flake-utils.lib.eachDefaultSystem (
@@ -138,6 +143,7 @@
 
             (./. + "/system/machines/${name}/configuration.nix")
             (./. + "/system/machines/${name}.nix")
+            chaotic.nixosModules.default
 
             home-manager.nixosModules.home-manager
             {

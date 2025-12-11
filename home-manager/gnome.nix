@@ -5,6 +5,7 @@
     gnomeExtensions.always-show-titles-in-overview
     gnomeExtensions.appindicator
     gnomeExtensions.blur-my-shell
+    gnomeExtensions.fullscreen-notifications
     gnomeExtensions.grand-theft-focus
     gnomeExtensions.no-overview
     gnomeExtensions.openweather-refined

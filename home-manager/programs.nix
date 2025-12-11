@@ -21,6 +21,7 @@
       easyeffects
       spotify
       deskflow
+      obsidian
     ]
     ++ lib.optionals config.full-desktop [
       # gwe
