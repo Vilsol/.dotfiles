@@ -55,6 +55,7 @@
         "blur-my-shell@aunetx"
         "grand-theft-focus@zalckos.github.com"
         "spotify-controls@Sonath21"
+        "fullscreen-notifications@sorrow.about.alice.pm.me"
       ];
     };
     "org/gnome/shell/extensions/advanced-alt-tab-window-switcher" = {
@@ -79,8 +80,6 @@
     };
     "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0" = {
       "binding" = "<Shift><Alt>t";
-      # "command" = "bash -c 'konsole --new-tab && wmctrl -a \"Konsole\"'";
-      # "name" = "Konsole";
       "command" = "bash -c 'xdg-open warp://action/new_tab?path=~ && wmctrl -a \"vilsol@\"'";
       "name" = "Warp";
     };

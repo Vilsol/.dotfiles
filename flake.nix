@@ -56,8 +56,21 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    chaotic = {
-      url = "github:chaotic-cx/nyx/nyxpkgs-unstable";
+    nix-cachyos-kernel = {
+      url = "github:xddxdd/nix-cachyos-kernel/release";
+    };
+
+    witr = {
+      url = "github:pranshuparmar/witr";
+    };
+
+    hyprland = {
+      url = "github:hyprwm/Hyprland";
+    };
+
+    hyprland-plugins = {
+      url = "github:hyprwm/hyprland-plugins";
+      inputs.hyprland.follows = "hyprland";
     };
   };
 
@@ -73,7 +86,10 @@
     nixos-hardware,
     # lix-module,
     nur,
-    chaotic,
+    nix-cachyos-kernel,
+    witr,
+    hyprland,
+    hyprland-plugins,
     ...
   } @ inputs:
     flake-utils.lib.eachDefaultSystem (
@@ -112,6 +128,7 @@
               allowUnfree = true;
               android_sdk.accept_license = true;
             };
+            overlays = [ nix-cachyos-kernel.overlays.pinned ];
           };
 
           extensions = inputs.nix-vscode-extensions.extensions.${system};
@@ -128,7 +145,7 @@
           };
 
           specialArgs = {
-            inherit system nixpkgs extensions androidComposition nixos-hardware;
+            inherit inputs system nixpkgs extensions androidComposition nixos-hardware witr;
           };
 
           modules = [
@@ -141,9 +158,12 @@
               config.full-desktop = is-full-desktop;
             }
 
+            {
+              nixpkgs.overlays = [ nix-cachyos-kernel.overlays.pinned ];
+            }
+
             (./. + "/system/machines/${name}/configuration.nix")
             (./. + "/system/machines/${name}.nix")
-            chaotic.nixosModules.default
 
             home-manager.nixosModules.home-manager
             {

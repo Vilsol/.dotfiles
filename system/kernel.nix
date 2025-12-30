@@ -1,6 +1,6 @@
 {pkgs, ...}: {
   boot = {
-    kernelPackages = pkgs.linuxPackages_cachyos-lto;
+    kernelPackages = pkgs.cachyosKernels.linuxPackages-cachyos-latest-lto-zen4;
     supportedFilesystems = ["ntfs"];
     loader.systemd-boot.enable = true;
     loader.efi.canTouchEfiVariables = true;

@@ -15,5 +15,6 @@
     ./tools.nix
     ./vscode.nix
     ./zsh.nix
+    ./hyprland.nix
   ];
 }

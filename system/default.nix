@@ -17,7 +17,7 @@
     ./shell.nix
     ./ssh.nix
     ./virtual.nix
-    ./wayland.nix
+    ./hyprland.nix
   ];
 
   options = {

@@ -6,11 +6,9 @@
     difftastic
     dig
     dive
-    exiv2
     file
     fzf
     gdu
-    mesa-demos
     htop
     iptables
     jq

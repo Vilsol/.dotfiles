@@ -4,7 +4,7 @@
     slack
     telegram-desktop
     zapzap
-    quasselClient
+    # quasselClient
     vesktop
   ];
 }

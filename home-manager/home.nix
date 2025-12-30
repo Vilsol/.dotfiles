@@ -1,4 +1,4 @@
-{
+{config, ...}: {
   home = {
     username = "vilsol";
     homeDirectory = "/home/vilsol";
@@ -11,4 +11,6 @@
   };
 
   programs.home-manager.enable = true;
+
+  xdg.configFile."uwsm/env".source = "${config.home.sessionVariablesPackage}/etc/profile.d/hm-session-vars.sh"; 
 }

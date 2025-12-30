@@ -1,7 +1,7 @@
-{pkgs, ...}: {
+{pkgs, witr, ...}: {
   home.packages = with pkgs; [
     bazelisk
-    crane
+    code-cursor
     devbox
     docker-compose
     evans
@@ -18,6 +18,8 @@
     mise
     nil
     python3Minimal
-    libtas
+    glow
+    delta
+    witr.packages.${pkgs.stdenv.hostPlatform.system}.default
   ];
 }

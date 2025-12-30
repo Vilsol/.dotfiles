@@ -7,7 +7,6 @@
   home.packages = with pkgs;
     [
       # chromium
-      flameshot
       fontconfig
       gimp
       dconf-editor
@@ -16,7 +15,6 @@
       libreoffice
       pavucontrol
       remmina
-      youtube-music
       vlc
       easyeffects
       spotify

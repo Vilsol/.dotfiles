@@ -6,7 +6,7 @@
     mangohud
     protonup-qt
     bottles
-    path-of-building
+    rusty-path-of-building
     vkd3d-proton
   ];
 }
