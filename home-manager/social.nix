@@ -6,5 +6,6 @@
     zapzap
     # quasselClient
     vesktop
+    discord-canary
   ];
 }

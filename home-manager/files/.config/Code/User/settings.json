@@ -1,0 +1,37 @@
+{
+  "Lua.telemetry.enable": true,
+  "Lua.workspace.preloadFileSize": 5000,
+  "[nix]": {
+    "editor.defaultFormatter": "jnoortheen.nix-ide"
+  },
+  "[python]": {
+    "editor.formatOnType": true
+  },
+  "editor.largeFileOptimizations": false,
+  "editor.selectionClipboard": false,
+  "editor.unicodeHighlight.nonBasicASCII": false,
+  "git.autofetch": true,
+  "git.confirmSync": false,
+  "hexeditor.columnWidth": 32,
+  "hexeditor.defaultEndianness": "little",
+  "hexeditor.inspectorType": "aside",
+  "hexeditor.showDecodedText": true,
+  "json.maxItemsComputed": 50000,
+  "nix.enableLanguageServer": true,
+  "svelte.enable-ts-plugin": true,
+  "vs-kubernetes": {
+    "vs-kubernetes.crd-code-completion": "enabled"
+  },
+  "workbench.colorTheme": "Darcula",
+  "json.schemaDownload.trustedDomains": {
+    "https://biomejs.dev": true,
+    "https://developer.microsoft.com/json-schemas/": true,
+    "https://json-schema.org/": true,
+    "https://json.schemastore.org/": true,
+    "https://raw.githubusercontent.com/devcontainers/spec/": true,
+    "https://raw.githubusercontent.com/microsoft/vscode/": true,
+    "https://schemastore.azurewebsites.net/": true,
+    "https://www.schemastore.org/": true
+  },
+  "diffEditor.ignoreTrimWhitespace": false
+}

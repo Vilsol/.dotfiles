@@ -62,7 +62,6 @@
       (androidStudioPackages.beta.full.withSdk androidComposition.androidsdk)
       # pkgs.nur.repos.xddxdd.flaresolverr-21hsmw
     ];
-  programs.adb.enable = true;
   users.users.vilsol.extraGroups = [
     "docker"
     "adbusers"
@@ -86,4 +85,7 @@
     enable = false;
     package = pkgs.gnomeExtensions.gsconnect;
   };
+
+  hardware.logitech.wireless.enable = true;
+  hardware.logitech.wireless.enableGraphical = true; # This specifically installs Solaar
 }

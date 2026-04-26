@@ -65,12 +65,40 @@
     };
 
     hyprland = {
-      url = "github:hyprwm/Hyprland";
+      url = "github:hyprwm/Hyprland?ref=v0.54.3";
     };
 
     hyprland-plugins = {
       url = "github:hyprwm/hyprland-plugins";
       inputs.hyprland.follows = "hyprland";
+    };
+
+    split-monitor-workspaces = {
+      url = "github:Duckonaut/split-monitor-workspaces?ref=v0.54.2";
+      inputs.hyprland.follows = "hyprland";
+    };
+
+    vicinae = {
+      url = "github:vicinaehq/vicinae";
+    };
+
+    hyprshell = {
+      url = "github:H3rmt/hyprshell?ref=hyprshell-release";
+      inputs.hyprland.follows = "hyprland";
+    };
+
+    lan-mouse = {
+      url = "github:feschber/lan-mouse";
+    };
+
+    solaar = {
+      url = "https://flakehub.com/f/Svenum/Solaar-Flake/*.tar.gz";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    quickshell = {
+      url = "git+https://git.outfoxxed.me/outfoxxed/quickshell";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
   };
 
@@ -90,6 +118,12 @@
     witr,
     hyprland,
     hyprland-plugins,
+    split-monitor-workspaces,
+    vicinae,
+    hyprshell,
+    lan-mouse,
+    solaar,
+    quickshell,
     ...
   } @ inputs:
     flake-utils.lib.eachDefaultSystem (
@@ -128,10 +162,13 @@
               allowUnfree = true;
               android_sdk.accept_license = true;
             };
-            overlays = [ nix-cachyos-kernel.overlays.pinned ];
+            overlays = [
+              nix-cachyos-kernel.overlays.pinned
+              nix-vscode-extensions.overlays.default
+            ];
           };
 
-          extensions = inputs.nix-vscode-extensions.extensions.${system};
+          extensions = pkgs;
 
           buildToolsVersion = "34.0.0";
           androidComposition = pkgs.androidenv.composeAndroidPackages {
@@ -145,7 +182,7 @@
           };
 
           specialArgs = {
-            inherit inputs system nixpkgs extensions androidComposition nixos-hardware witr;
+            inherit inputs system nixpkgs extensions androidComposition nixos-hardware witr quickshell;
           };
 
           modules = [
@@ -162,6 +199,8 @@
               nixpkgs.overlays = [ nix-cachyos-kernel.overlays.pinned ];
             }
 
+            solaar.nixosModules.default
+
             (./. + "/system/machines/${name}/configuration.nix")
             (./. + "/system/machines/${name}.nix")
 
@@ -177,6 +216,7 @@
                 }: {
                   imports = [
                     # ragenix.homeManagerModules.default
+                    vicinae.homeManagerModules.default
                     ./system/home-manager/default.nix
                   ];
 

@@ -24,6 +24,7 @@
     noto-fonts
     noto-fonts-cjk-sans
     noto-fonts-color-emoji
+    powerline-fonts
   ];
 
   i18n.inputMethod.ibus.engines = with pkgs.ibus-engines; [mozc];

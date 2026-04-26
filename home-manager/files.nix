@@ -1,4 +1,7 @@
-{lib, ...}: let
+{lib, config, ...}:
+let
+  localFlakeRoot = "/home/vilsol/.dotfiles/home-manager";
+
   mapRecursive = path: prefix:
     lib.attrsets.mapAttrsToList (
       fileName: type: let
@@ -10,18 +13,24 @@
             else "/"
           )
           + fileName;
-        prefixedPath = path + ("/" + fileName);
+        
+        # This path is still used for reading the directory structure during build
+        nixStorePath = path + ("/" + fileName);
+        
+        # This string constructs the absolute path on your filesystem
+        absoluteSystemPath = "${localFlakeRoot}/files/${prefixedName}";
       in
         if (type == "directory")
         then
           (
-            mapRecursive prefixedPath prefixedName
+            mapRecursive nixStorePath prefixedName
           )
         else [
           {
             name = toString prefixedName;
             value = {
-              source = toString prefixedPath;
+              # 3. CHANGED: Use mkOutOfStoreSymlink pointing to the absolute path
+              source = config.lib.file.mkOutOfStoreSymlink absoluteSystemPath;
             };
           }
         ]

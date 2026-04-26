@@ -10,18 +10,14 @@
     b4dm4n.nixpkgs-fmt
     bbenoist.nix
     brettm12345.nixfmt-vscode
-    continue.continue
     coolbear.systemd-unit-file
     eamodio.gitlens
     fabiospampinato.vscode-diff
-    (github.copilot.override {meta.license = [];})
     golang.go
     iliazeus.vscode-ansi
-    jetpack-io.devbox
     jnoortheen.nix-ide
     mechatroner.rainbow-csv
     (mhutchie.git-graph.override {meta.license = [];})
-    mkhl.direnv
     ms-azuretools.vscode-docker
     ms-kubernetes-tools.vscode-kubernetes-tools
     (ms-vscode-remote.remote-containers.override {meta.license = [];})
@@ -46,6 +42,9 @@
     vrtlabs.vscode-lsl
     weaveworks.vscode-gitops-tools
     zxh404.vscode-proto3
+    ms-python.python
+    ms-python.debugpy
+    bbenoist.qml
   ];
 in {
   programs.vscode = {
@@ -54,32 +53,6 @@ in {
     package = pkgs.vscode;
     profiles.default = {
       extensions = extensionsList;
-      userSettings = {
-        "editor.largeFileOptimizations" = false;
-        "workbench.colorTheme" = "Darcula";
-        "editor.unicodeHighlight.nonBasicASCII" = false;
-        "git.confirmSync" = false;
-        "git.autofetch" = true;
-        "svelte.enable-ts-plugin" = true;
-        "Lua.telemetry.enable" = true;
-        "Lua.workspace.preloadFileSize" = 5000;
-        "hexeditor.columnWidth" = 32;
-        "hexeditor.showDecodedText" = true;
-        "hexeditor.defaultEndianness" = "little";
-        "hexeditor.inspectorType" = "aside";
-        "editor.selectionClipboard" = false;
-        "vs-kubernetes" = {
-          "vs-kubernetes.crd-code-completion" = "enabled";
-        };
-        "json.maxItemsComputed" = 50000;
-        "[python]" = {
-          "editor.formatOnType" = true;
-        };
-        "[nix]" = {
-          "editor.defaultFormatter" = "jnoortheen.nix-ide";
-        };
-        "nix.enableLanguageServer" = true;
-      };
     };
   };
 }

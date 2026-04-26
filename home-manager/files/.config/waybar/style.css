@@ -1,0 +1,98 @@
+@define-color cursor #B3B1AC;
+@define-color background #BFBDC0;
+@define-color foreground #151416;
+@define-color color0  #504D49;
+@define-color color1  #716D74;
+@define-color color2  #A27474;
+@define-color color3  #7D8078;
+@define-color color4  #BE8877;
+@define-color color5  #A8A597;
+@define-color color6  #FAE8D2;
+@define-color color7  #9B989D;
+@define-color color8  #6C6A6E;
+@define-color color9  #716D74;
+@define-color color10 #A27474;
+@define-color color11 #7D8078;
+@define-color color12 #BE8877;
+@define-color color13 #A8A597;
+@define-color color14 #FAE8D2;
+@define-color color15 #9B989D;
+
+* {
+  font-family: "JetBrainsMono Nerd Font";
+  font-size: 16px;
+  border: none;
+  border-radius: 0;
+}
+
+window#waybar {
+  background-color: rgba(30, 30, 46, 0.9);
+  color: #cdd6f4;
+  border: none;
+  padding: 5px;
+}
+
+#workspaces {
+  margin: 0;
+  padding: 0;
+}
+
+#workspaces button {
+  padding: 0 6px;
+  margin: 0 6px;
+  border-radius: 10px;
+  min-height: 10px;
+  color: white;
+}
+
+#workspaces button.active {
+  color: #2da92d;
+  background: rgba(255, 255, 255, 0.3);
+}
+
+#workspaces button.urgent {
+  color: #c43e3e;
+  background: rgba(255, 0, 0, 0.2);
+  animation: blink 1s linear infinite;
+}
+
+#workspaces button:hover {
+  background-color: rgba(137, 180, 250, 0.2);
+}
+
+#clock,
+#battery,
+#cpu,
+#memory,
+#network,
+#pulseaudio,
+#tray,
+#custom-notification {
+  padding: 0 10px;
+  margin: 0 2px;
+}
+
+#battery.charging {
+  color: #a6e3a1;
+}
+
+#battery.warning:not(.charging) {
+  color: #fab387;
+}
+
+#battery.critical:not(.charging) {
+  color: #f38ba8;
+  animation: blink 0.5s linear infinite alternate;
+}
+
+@keyframes blink {
+  to {
+    background-color: #f38ba8;
+    color: #1e1e2e;
+  }
+}
+
+#custom-notification {
+  font-family: "NotoSansMono Nerd Font";
+}
+

@@ -1,15 +1,8 @@
 {pkgs, ...}: {
   imports = [
     ./hardware-configuration.nix
+    ./swap.nix
   ];
-
-  boot = {
-    initrd = {
-      secrets."/crypto_keyfile.bin" = null;
-      luks.devices."luks-1b641a1e-4ee4-47f6-8298-6255c9a68ac7".device = "/dev/disk/by-uuid/1b641a1e-4ee4-47f6-8298-6255c9a68ac7";
-      luks.devices."luks-1b641a1e-4ee4-47f6-8298-6255c9a68ac7".keyFile = "/crypto_keyfile.bin";
-    };
-  };
 
   networking.hostName = "cortex";
 
@@ -18,7 +11,10 @@
       enable = true;
     };
 
-    displayManager.gdm.enable = true;
+    displayManager = {
+      gdm.enable = true;
+      defaultSession = "hyprland-uwsm";
+    };
     desktopManager.gnome.enable = true;
   };
 
@@ -32,7 +28,7 @@
   '';
 
   services.sunshine = {
-    enable = true;
+    enable = false;
     autoStart = true;
     capSysAdmin = true;
     package = pkgs.sunshine.override {
@@ -63,4 +59,14 @@
     "pcie_aspm=off"
     "iwlwifi.power_save=0" # Generic WiFi power save disable
   ];
+
+  services.fprintd.enable = true;
+  services.fprintd.tod.enable = true;
+  services.fprintd.tod.driver = pkgs.libfprint-2-tod1-goodix;
+
+  environment.systemPackages = [
+    pkgs.fprintd
+  ];
+
+  hardware.nvidia-container-toolkit.enable = true;
 }

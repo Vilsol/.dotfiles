@@ -6,6 +6,7 @@
     ./games.nix
     ./git.nix
     ./gnome.nix
+    ./gtk.nix
     ./home.nix
     ./mangohud.nix
     ./programs.nix
@@ -16,5 +17,11 @@
     ./vscode.nix
     ./zsh.nix
     ./hyprland.nix
+    ./waybar.nix
+    ./vicinae.nix
+    ./hyprlock.nix
+    ./hypridle.nix
+    ./hyprpaper.nix
+    ./quickshell.nix
   ];
 }

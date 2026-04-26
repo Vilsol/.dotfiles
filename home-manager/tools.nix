@@ -2,28 +2,26 @@
   home.packages = with pkgs; [
     appimage-run
     coreutils
-    delve
     difftastic
     dig
     dive
     file
     fzf
     gdu
-    htop
     iptables
     jq
     killall
     kubectl
-    neofetch
+    fastfetch
     nix-index
     nix-update
-    nixfmt-rfc-style
+    nixfmt
     nvd
     p7zip
     unzip
     usbutils
     vulkan-tools
-    xorg.xkill
+    xkill
   ];
 
   programs.btop.enable = true;
