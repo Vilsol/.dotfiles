@@ -19,37 +19,10 @@
 
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
 
-    # agenix = {
-    #   url = "github:ryantm/agenix";
-    #   inputs = {
-    #     nixpkgs.follows = "nixpkgs";
-    #     home-manager.follows = "home-manager";
-    #     systems.follows = "systems";
-    #   };
-    # };
-
-    # ragenix = {
-    #   url = "github:yaxitech/ragenix";
-    #   inputs = {
-    #     nixpkgs.follows = "nixpkgs";
-    #     agenix.follows = "agenix";
-    #     flake-utils.follows = "flake-utils";
-    #   };
-    # };
-
     pre-commit-hooks = {
       url = "github:cachix/pre-commit-hooks.nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
-    # lix-module = {
-    #   url = "git+https://git.lix.systems/lix-project/nixos-module";
-    #   inputs.nixpkgs.follows = "nixpkgs";
-    #   inputs.lix = {
-    #     url = "git+https://git.lix.systems/lix-project/lix";
-    #     inputs.nixpkgs.follows = "nixpkgs";
-    #   };
-    # };
 
     nur = {
       url = "github:nix-community/NUR";
@@ -106,22 +79,14 @@
     self,
     nixpkgs,
     home-manager,
-    # nix-flatpak,
     nix-vscode-extensions,
     pre-commit-hooks,
     flake-utils,
-    # ragenix,
     nixos-hardware,
-    # lix-module,
     nur,
     nix-cachyos-kernel,
     witr,
-    hyprland,
-    hyprland-plugins,
-    split-monitor-workspaces,
     vicinae,
-    hyprshell,
-    lan-mouse,
     solaar,
     quickshell,
     ...
@@ -186,17 +151,12 @@
           };
 
           modules = [
-            # lix-module.nixosModules.default
-
-            # nix-flatpak.nixosModules.nix-flatpak
-            # ragenix.nixosModules.default
             {
-              # config.environment.systemPackages = [ragenix.packages.${system}.default];
               config.full-desktop = is-full-desktop;
             }
 
             {
-              nixpkgs.overlays = [ nix-cachyos-kernel.overlays.pinned ];
+              nixpkgs.overlays = [nix-cachyos-kernel.overlays.pinned];
             }
 
             solaar.nixosModules.default
@@ -209,23 +169,11 @@
               home-manager = {
                 useGlobalPkgs = true;
                 useUserPackages = true;
-                users.vilsol = {
-                  config,
-                  lib,
-                  ...
-                }: {
+                users.vilsol = {lib, ...}: {
                   imports = [
-                    # ragenix.homeManagerModules.default
                     vicinae.homeManagerModules.default
                     ./system/home-manager/default.nix
                   ];
-
-                  config = {
-                    # age = {
-                    #   secretsDir = "${config.home.homeDirectory}/.agenix/agenix";
-                    #   secretsMountPoint = "${config.home.homeDirectory}/.agenix/agenix.d";
-                    # };
-                  };
 
                   options = {
                     full-desktop = lib.mkOption {
@@ -240,7 +188,6 @@
             }
 
             nur.modules.nixos.default
-            #nur.legacyPackages."${system}".repos.xddxdd.modules.flaresolverr-21hsmw
             ({pkgs, ...}: {
               environment.systemPackages = [pkgs.nur.repos.xddxdd.flaresolverr-21hsmw];
             })

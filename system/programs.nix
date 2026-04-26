@@ -62,12 +62,6 @@
       (androidStudioPackages.beta.full.withSdk androidComposition.androidsdk)
       # pkgs.nur.repos.xddxdd.flaresolverr-21hsmw
     ];
-  users.users.vilsol.extraGroups = [
-    "docker"
-    "adbusers"
-    "dialout"
-  ];
-
   nixpkgs.config = {
     permittedInsecurePackages = [
       "python-2.7.18.6"

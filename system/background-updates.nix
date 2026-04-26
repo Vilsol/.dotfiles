@@ -125,73 +125,65 @@ in {
   };
 
   config = mkIf cfg.enable {
-    # Ensure log directory exists
-    systemd.tmpfiles.rules = [
-      "d /var/log 0755 root root -"
-      "f /var/log/nixos-background-updates.log 0644 root root -"
-    ];
-
-    # Background update service
-    systemd.services.nixos-background-update = {
-      description = "NixOS Background System Update";
-      path = with pkgs; [
-        nixos-rebuild
-        nix
-        git
-        gnutar
-        gzip
-        coreutils
+    systemd = {
+      tmpfiles.rules = [
+        "d /var/log 0755 root root -"
+        "f /var/log/nixos-background-updates.log 0644 root root -"
       ];
 
-      serviceConfig = {
-        Type = "oneshot";
-        User = "root";
-        ExecStart = "${updateScript}";
-
-        # Security settings
-        PrivateTmp = true;
-        ProtectSystem = "strict";
-        ProtectHome = "read-only";
-        ReadWritePaths = [
-          "/nix/var/nix/profiles"
-          "/var/log"
-          "/tmp"
-          "/boot"
+      services.nixos-background-update = {
+        description = "NixOS Background System Update";
+        path = with pkgs; [
+          nixos-rebuild
+          nix
+          git
+          gnutar
+          gzip
+          coreutils
         ];
 
-        # Resource limits
-        MemoryMax = "4G";
-        TasksMax = 100;
+        serviceConfig = {
+          Type = "oneshot";
+          User = "root";
+          ExecStart = "${updateScript}";
 
-        # Timeout settings
-        TimeoutStartSec = "2h";
+          PrivateTmp = true;
+          ProtectSystem = "strict";
+          ProtectHome = "read-only";
+          ReadWritePaths = [
+            "/nix/var/nix/profiles"
+            "/var/log"
+            "/tmp"
+            "/boot"
+          ];
 
-        # Restart policy
-        Restart = "no";
+          MemoryMax = "4G";
+          TasksMax = 100;
+
+          TimeoutStartSec = "2h";
+
+          Restart = "no";
+        };
+
+        unitConfig = {
+          ConditionFileNotOlderThan = "/nix/var/nix/profiles/system:1d";
+        };
       };
 
-      # Don't start if the system was recently updated manually
-      unitConfig = {
-        ConditionFileNotOlderThan = "/nix/var/nix/profiles/system:1d";
+      timers.nixos-background-update = {
+        description = "Run NixOS background updates daily";
+        wantedBy = ["timers.target"];
+
+        timerConfig = {
+          OnCalendar = "daily";
+          Persistent = true;
+          RandomizedDelaySec = cfg.randomizedDelay;
+
+          OnCalendar = "*-*-* ${cfg.time}:00";
+        };
       };
     };
 
-    # Timer to run the service daily
-    systemd.timers.nixos-background-update = {
-      description = "Run NixOS background updates daily";
-      wantedBy = ["timers.target"];
-
-      timerConfig = {
-        OnCalendar = "daily";
-        Persistent = true;
-        RandomizedDelaySec = cfg.randomizedDelay;
-
-        # Set specific time
-        OnCalendar = "*-*-* ${cfg.time}:00";
-      };
-    };
-
-    # Add a helper command for manual runs
     environment.systemPackages = [
       (pkgs.writeShellScriptBin "nixos-background-update-now" ''
         echo "Starting manual background update..."

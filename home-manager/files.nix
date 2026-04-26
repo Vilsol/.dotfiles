@@ -1,5 +1,8 @@
-{lib, config, ...}:
-let
+{
+  lib,
+  config,
+  ...
+}: let
   localFlakeRoot = "/home/vilsol/.dotfiles/home-manager";
 
   mapRecursive = path: prefix:
@@ -13,10 +16,10 @@ let
             else "/"
           )
           + fileName;
-        
+
         # This path is still used for reading the directory structure during build
         nixStorePath = path + ("/" + fileName);
-        
+
         # This string constructs the absolute path on your filesystem
         absoluteSystemPath = "${localFlakeRoot}/files/${prefixedName}";
       in

@@ -47,12 +47,7 @@
     options rtw89_8922a rtw89_disable_ps_mode=1
   '';
 
-  # Network configuration
-  networking.networkmanager = {
-    enable = true;
-    wifi.powersave = false;
-    wifi.scanRandMacAddress = false;
-  };
+  networking.networkmanager.wifi.scanRandMacAddress = false;
 
   # Kernel parameters for stability
   boot.kernelParams = [
@@ -67,6 +62,4 @@
   environment.systemPackages = [
     pkgs.fprintd
   ];
-
-  hardware.nvidia-container-toolkit.enable = true;
 }

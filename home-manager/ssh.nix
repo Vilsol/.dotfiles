@@ -1,7 +1,7 @@
 {lib, ...}: {
   programs.ssh = {
     enable = true;
-    includes = [ "config.d/*" ];
+    includes = ["config.d/*"];
   };
 
   home.file = {
@@ -10,7 +10,7 @@
 
   home.activation = {
     # https://github.com/nix-community/home-manager/issues/322
-    fixSshPermissions = lib.hm.dag.entryAfter [ "linkGeneration" ] ''
+    fixSshPermissions = lib.hm.dag.entryAfter ["linkGeneration"] ''
       run install -d -m 0700 "$HOME/.ssh"
       if [ -L "$HOME/.ssh/config" ]; then
         src="$(readlink -f "$HOME/.ssh/config")"

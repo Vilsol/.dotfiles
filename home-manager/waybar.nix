@@ -1,18 +1,18 @@
-{...}: {
+_: {
   programs.waybar = {
     enable = true;
     systemd = {
       enable = true;
       targets = ["hyprland-session.target"];
     };
-    
+
     settings = {
       mainBar = {
         layer = "top";
         position = "top";
         height = 50;
         output = ["DP-3" "DP-2"];
-        
+
         modules-left = [
           "hyprland/workspaces"
           "hyprland/window"
@@ -58,7 +58,6 @@
         "hyprland/window" = {
           max-length = 50;
         };
-        
 
         "mpris" = {
           interval = 1;
@@ -162,4 +161,3 @@
     };
   };
 }
-

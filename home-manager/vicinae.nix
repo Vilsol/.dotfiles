@@ -1,4 +1,4 @@
-{...}: {
+_: {
   services.vicinae = {
     enable = true;
     systemd = {
@@ -21,4 +21,3 @@
     };
   };
 }
-

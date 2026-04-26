@@ -3,9 +3,9 @@
     enable = true;
     remotePlay.openFirewall = true;
     dedicatedServer.openFirewall = true;
-    
+
     # Force Steam to use proper DPI scaling on high-DPI displays
-    extraCompatPackages = [ ];
+    extraCompatPackages = [];
     gamescopeSession.enable = true;
   };
 
@@ -15,7 +15,7 @@
     enable = true;
     capSysNice = false;
   };
-  
+
   # Environment variables for Steam scaling on Wayland
   environment.sessionVariables = {
     STEAM_FORCE_DESKTOPUI_SCALING = "2";

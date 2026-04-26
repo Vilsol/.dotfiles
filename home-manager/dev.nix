@@ -1,4 +1,8 @@
-{pkgs, witr, ...}: {
+{
+  pkgs,
+  witr,
+  ...
+}: {
   home.packages = with pkgs; [
     bazelisk
     docker-compose

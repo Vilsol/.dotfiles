@@ -1,5 +1,8 @@
-{pkgs, inputs, ...}: {
-
+{
+  pkgs,
+  inputs,
+  ...
+}: {
   wayland.windowManager.hyprland = {
     enable = true;
 
@@ -31,14 +34,14 @@
     (writeShellScriptBin "lock-screen" ''
       # Read current border size
       BORDER_SIZE=$(${hyprland}/bin/hyprctl getoption general:border_size -j | ${pkgs.jq}/bin/jq -r '.int')
-      
+
       # Hide borders before locking
       ${hyprland}/bin/hyprctl keyword general:border_size 0
       sleep 0.01
-      
+
       # Lock the screen
       pidof hyprlock || ${hyprlock}/bin/hyprlock
-      
+
       # Restore original border size after unlock
       ${hyprland}/bin/hyprctl keyword general:border_size "$BORDER_SIZE"
     '')

@@ -43,7 +43,15 @@
   users.users.vilsol = {
     isNormalUser = true;
     description = "Vilsol";
-    extraGroups = ["networkmanager" "wheel" "ydotool" "uinput"];
+    extraGroups = [
+      "networkmanager"
+      "wheel"
+      "ydotool"
+      "uinput"
+      "docker"
+      "adbusers"
+      "dialout"
+    ];
   };
 
   systemd.services."getty@tty1".enable = false;

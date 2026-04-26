@@ -1,4 +1,8 @@
-{inputs, pkgs, ...}: {
+{
+  inputs,
+  pkgs,
+  ...
+}: {
   programs.hyprland = {
     enable = true;
     withUWSM = true;
@@ -10,17 +14,17 @@
   # Override uwsm session file to remove TryExec that GDM can't validate
   services.displayManager.sessionPackages = [
     (pkgs.runCommand "hyprland-uwsm-session" {
-      passthru.providedSessions = [ "hyprland-uwsm" ];
-    } ''
-      mkdir -p $out/share/wayland-sessions
-      cat > $out/share/wayland-sessions/hyprland-uwsm.desktop << EOF
-      [Desktop Entry]
-      Name=Hyprland (uwsm)
-      Comment=An intelligent dynamic tiling Wayland compositor managed by uwsm
-      Exec=${pkgs.uwsm}/bin/uwsm start -e -D Hyprland hyprland.desktop
-      Type=Application
-      DesktopNames=Hyprland
-      EOF
-    '')
+        passthru.providedSessions = ["hyprland-uwsm"];
+      } ''
+        mkdir -p $out/share/wayland-sessions
+        cat > $out/share/wayland-sessions/hyprland-uwsm.desktop << EOF
+        [Desktop Entry]
+        Name=Hyprland (uwsm)
+        Comment=An intelligent dynamic tiling Wayland compositor managed by uwsm
+        Exec=${pkgs.uwsm}/bin/uwsm start -e -D Hyprland hyprland.desktop
+        Type=Application
+        DesktopNames=Hyprland
+        EOF
+      '')
   ];
 }

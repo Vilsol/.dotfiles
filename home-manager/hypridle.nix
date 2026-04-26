@@ -1,12 +1,12 @@
-{...}: {
+_: {
   services.hypridle = {
     enable = true;
-    
+
     settings = {
       general = {
-        lock_cmd = "lock-screen";  # Use wrapper script that handles borders
-        before_sleep_cmd = "lock-screen";  # Lock before suspend
-        after_sleep_cmd = "hyprctl dispatch dpms on";  # Turn displays on after suspend
+        lock_cmd = "lock-screen"; # Use wrapper script that handles borders
+        before_sleep_cmd = "lock-screen"; # Lock before suspend
+        after_sleep_cmd = "hyprctl dispatch dpms on"; # Turn displays on after suspend
       };
 
       listener = [
@@ -25,4 +25,3 @@
     };
   };
 }
-

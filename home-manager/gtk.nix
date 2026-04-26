@@ -1,22 +1,22 @@
 {pkgs, ...}: {
   gtk = {
     enable = true;
-    
+
     theme = {
       name = "Adwaita-dark";
       package = pkgs.gnome-themes-extra;
     };
-    
+
     iconTheme = {
       name = "Adwaita";
       package = pkgs.adwaita-icon-theme;
     };
-    
+
     font = {
       name = "Noto Sans Nerd Font";
       size = 11;
     };
-    
+
     gtk3.extraCss = ''
       /* Customize dropdown/context menus */
       menu,
@@ -29,7 +29,7 @@
         padding: 4px;
         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
       }
-      
+
       /* Menu items */
       menuitem,
       .menuitem {
@@ -37,14 +37,14 @@
         border-radius: 4px;
         transition: all 200ms ease;
       }
-      
+
       /* Menu item hover */
       menuitem:hover,
       .menuitem:hover {
         background-color: rgba(137, 180, 250, 0.2);
         color: #89b4fa;
       }
-      
+
       /* Menu item selected/active */
       menuitem:active,
       .menuitem:active,
@@ -52,7 +52,7 @@
       .menuitem:selected {
         background-color: rgba(137, 180, 250, 0.3);
       }
-      
+
       /* Menu separators */
       separator,
       .separator {
@@ -60,20 +60,20 @@
         min-height: 1px;
         margin: 4px 8px;
       }
-      
+
       /* Disabled menu items */
       menuitem:disabled,
       .menuitem:disabled {
         color: #6c7086;
       }
-      
+
       /* Menu arrows/indicators */
       menuitem arrow,
       .menuitem arrow {
         min-height: 16px;
         min-width: 16px;
       }
-      
+
       /* Checkboxes and radio buttons in menus */
       menuitem check,
       menuitem radio {
@@ -82,7 +82,7 @@
         margin-right: 8px;
       }
     '';
-    
+
     gtk4.theme = null;
     gtk4.extraCss = ''
       /* GTK4 menu styling */
@@ -95,20 +95,20 @@
         padding: 4px;
         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
       }
-      
+
       /* GTK4 menu items */
       popover.menu box.vertical > modelbutton,
       popover.menu modelbutton {
         padding: 8px 12px;
         border-radius: 4px;
       }
-      
+
       popover.menu box.vertical > modelbutton:hover,
       popover.menu modelbutton:hover {
         background-color: rgba(137, 180, 250, 0.2);
         color: #89b4fa;
       }
-      
+
       /* GTK4 menu separators */
       popover.menu separator {
         background-color: rgba(137, 180, 250, 0.2);
@@ -117,12 +117,12 @@
       }
     '';
   };
-  
+
   # Ensure GTK settings are applied for Hyprland
   home.sessionVariables = {
     GTK_THEME = "Adwaita-dark";
   };
-  
+
   # Qt theming to match GTK (for Qt-based tray icons)
   qt = {
     enable = true;
@@ -133,4 +133,3 @@
     };
   };
 }
-
