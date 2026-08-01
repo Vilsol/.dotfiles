@@ -6,8 +6,9 @@
   nix.settings = {
     substituters = [
       "https://cache.nixos.org/"
-      # Latent: nothing in the closure needs it today, but cudaSupport is on,
-      # so it matters the moment services.ollama is enabled.
+      # Latent: nothing in the closure needs it today. ./ai.nix pins
+      # pkgs.ollama-cuda, so this matters the moment services.ollama is
+      # enabled -- without it that pulls the CUDA stack from source.
       "https://cuda-maintainers.cachix.org"
       "https://attic.xuyh0120.win/lantian"
       "https://hyprland.cachix.org"

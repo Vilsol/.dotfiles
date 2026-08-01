@@ -1,16 +1,16 @@
-{lib, ...}: {
+{
   imports = [
     ./ai.nix
     ./attic.nix
-    # ./background-updates.nix
     ./cachix.nix
     ./common.nix
-    # ./flatpak.nix
     ./fonts.nix
     ./games.nix
+    ./hyprland.nix
     ./kernel.nix
     ./minikube.nix
     ./network.nix
+    ./nixpkgs.nix
     ./os.nix
     ./pcsc.nix
     ./pipewire.nix
@@ -18,14 +18,5 @@
     ./shell.nix
     ./ssh.nix
     ./virtual.nix
-    ./hyprland.nix
   ];
-
-  options = {
-    full-desktop = lib.mkOption {
-      type = lib.types.bool;
-      default = false;
-      description = "include all desktop software and settings";
-    };
-  };
 }

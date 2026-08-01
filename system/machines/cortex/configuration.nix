@@ -1,10 +1,14 @@
 {pkgs, ...}: {
   imports = [
+    ../../default.nix
+    ../../nvidia.nix
     ./hardware-configuration.nix
     ./swap.nix
   ];
 
   networking.hostName = "cortex";
+
+  powerManagement.cpuFreqGovernor = "performance";
 
   services = {
     xserver = {

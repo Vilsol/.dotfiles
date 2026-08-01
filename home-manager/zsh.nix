@@ -14,8 +14,6 @@
     };
     syntaxHighlighting.enable = true;
     shellAliases = {
-      # up = "bash " + (./. + "/../tools/up.sh");
-      # upgrade = "pushd /home/vilsol/.dotfiles && nix flake update && popd && up";
       up = "nh os switch ~/.dotfiles -v --ask";
       upb = "nh os boot ~/.dotfiles -v --ask";
       upgrade = "nh os switch ~/.dotfiles -v --ask -u";

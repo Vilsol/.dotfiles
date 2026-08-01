@@ -1,9 +1,5 @@
-{
-  pkgs,
-  extensions,
-  ...
-}: let
-  extensionsList = with extensions.vscode-marketplace; [
+{pkgs, ...}: let
+  extensionsList = with pkgs.vscode-marketplace; [
     antyos.vscode-mlog
     arrterian.nix-env-selector
     # asciidoctor.asciidoctor-vscode

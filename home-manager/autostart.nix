@@ -8,7 +8,7 @@
     [
       pkgs._1password-gui
     ]
-    ++ lib.optionals config.full-desktop [
+    ++ lib.optionals config.my.fullDesktop [
       pkgs.telegram-desktop
       pkgs.discord
     ];

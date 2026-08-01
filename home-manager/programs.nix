@@ -31,7 +31,7 @@
       claude-desktop
       bubblewrap # cowork-mode sandbox backend for claude-desktop
     ]
-    ++ lib.optionals config.full-desktop [
+    ++ lib.optionals config.my.fullDesktop [
       # gwe
       # handbrake
       obs-studio

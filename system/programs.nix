@@ -1,9 +1,4 @@
-{
-  pkgs,
-  config,
-  androidComposition,
-  ...
-}: {
+{pkgs, ...}: {
   environment.sessionVariables = {
     MOZ_ENABLE_WAYLAND = "1";
   };
@@ -53,21 +48,6 @@
 
   virtualisation.docker = {
     enable = true;
-  };
-
-  environment.systemPackages = with pkgs;
-    lib.optionals config.full-desktop [
-      # flutter
-      # android-tools
-      # (androidStudioPackages.beta.full.withSdk androidComposition.androidsdk)
-    ];
-  nixpkgs.config = {
-    permittedInsecurePackages = [
-      "python-2.7.18.6"
-      "electron-24.8.6"
-    ];
-
-    segger-jlink.acceptLicense = true;
   };
 
   programs.coolercontrol = {

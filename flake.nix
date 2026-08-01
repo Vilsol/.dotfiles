@@ -12,8 +12,6 @@
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
-    nix-flatpak.url = "github:gmodena/nix-flatpak/?ref=v0.3.0";
-
     nix-vscode-extensions.url = "github:nix-community/nix-vscode-extensions";
     nix-vscode-extensions.inputs.nixpkgs.follows = "nixpkgs";
 
@@ -48,10 +46,6 @@
     split-monitor-workspaces = {
       url = "github:Duckonaut/split-monitor-workspaces";
       inputs.hyprland.follows = "hyprland";
-    };
-
-    vicinae = {
-      url = "github:vicinaehq/vicinae";
     };
 
     hyprshell = {
@@ -95,13 +89,10 @@
     self,
     nixpkgs,
     home-manager,
-    nix-vscode-extensions,
     pre-commit-hooks,
     flake-utils,
     nixos-hardware,
-    nix-cachyos-kernel,
     witr,
-    vicinae,
     solaar,
     quickshell,
     dank-material-shell,
@@ -110,14 +101,12 @@
   } @ inputs:
     flake-utils.lib.eachDefaultSystem (
       system: let
-        pkgs = import nixpkgs {
-          inherit system;
-          config = {
-            allowUnfree = true;
-            android_sdk.accept_license = true;
-          };
-        };
+        # Plain nixpkgs: this shell only runs the pre-commit hooks, so it needs
+        # neither the overlays nor the config the machines use.
+        pkgs = nixpkgs.legacyPackages.${system};
       in {
+        formatter = pkgs.alejandra;
+
         checks = {
           pre-commit-hooks = pre-commit-hooks.lib.${system}.run {
             hooks = {
@@ -138,94 +127,27 @@
     // (
       let
         mkSystem = system: name: is-full-desktop: let
-          pkgs = import nixpkgs {
-            inherit system;
-            config = {
-              allowUnfree = true;
-              android_sdk.accept_license = true;
-            };
-            overlays = [
-              nix-cachyos-kernel.overlays.pinned
-              nix-vscode-extensions.overlays.default
-              inputs.claude-desktop.overlays.default
-            ];
-          };
-
-          extensions = pkgs;
-
-          buildToolsVersion = "34.0.0";
-          androidComposition = pkgs.androidenv.composeAndroidPackages {
-            buildToolsVersions = [buildToolsVersion "28.0.3"];
-            platformVersions = ["34" "28"];
-            abiVersions = ["armeabi-v7a" "arm64-v8a"];
-            includeEmulator = true;
-            extraLicenses = [
-              "android-sdk-license"
-            ];
-          };
-
           specialArgs = {
-            inherit inputs system nixpkgs extensions androidComposition nixos-hardware witr quickshell dank-material-shell klados;
+            inherit inputs nixos-hardware witr quickshell dank-material-shell klados;
           };
 
           modules = [
             {
-              config.full-desktop = is-full-desktop;
-            }
-
-            {
-              nixpkgs.overlays = [
-                nix-cachyos-kernel.overlays.pinned
-                inputs.claude-desktop.overlays.default
-                (_final: prev:
-                  if prev.stdenv.hostPlatform.system == "i686-linux"
-                  then {
-                    openldap = prev.openldap.overrideAttrs (_: {
-                      doCheck = false;
-                    });
-                  }
-                  else {})
-                # patool's tests fail under python 3.14 (nixpkgs#540025); it is
-                # only pulled in as a bottles library dep. pytestCheckHook runs
-                # in installCheckPhase, so doCheck is not the flag to unset.
-                # Drop once that issue closes.
-                (_final: prev: {
-                  pythonPackagesExtensions =
-                    prev.pythonPackagesExtensions
-                    ++ [
-                      (_pyFinal: pyPrev: {
-                        patool = pyPrev.patool.overrideAttrs (_: {
-                          doInstallCheck = false;
-                        });
-                      })
-                    ];
-                })
-              ];
+              nixpkgs.overlays = import ./overlays inputs;
             }
 
             solaar.nixosModules.default
 
             (./. + "/system/machines/${name}/configuration.nix")
-            (./. + "/system/machines/${name}.nix")
 
             home-manager.nixosModules.home-manager
             {
               home-manager = {
                 useGlobalPkgs = true;
                 useUserPackages = true;
-                users.vilsol = {lib, ...}: {
-                  imports = [
-                    vicinae.homeManagerModules.default
-                    ./system/home-manager/default.nix
-                  ];
-
-                  options = {
-                    full-desktop = lib.mkOption {
-                      type = lib.types.bool;
-                      default = is-full-desktop;
-                      description = "include all desktop software and settings";
-                    };
-                  };
+                users.vilsol = {
+                  imports = [./home-manager/default.nix];
+                  my.fullDesktop = is-full-desktop;
                 };
                 extraSpecialArgs = specialArgs;
               };

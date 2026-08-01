@@ -57,8 +57,6 @@
   systemd.services."getty@tty1".enable = false;
   systemd.services."autovt@tty1".enable = false;
 
-  nixpkgs.config.allowUnfree = true;
-
   services.fwupd.enable = true;
 
   nix.settings.trusted-users = ["vilsol"];
