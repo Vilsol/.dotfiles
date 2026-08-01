@@ -57,7 +57,12 @@
     };
 
     solaar = {
-      url = "https://flakehub.com/f/Svenum/Solaar-Flake/*.tar.gz";
+      # Not the flakehub tarball: Lix locks that URL with ?rev=&revCount=
+      # query params, upstream Nix re-fetches it without them, and
+      # fetchTreeFinal then rejects the mismatch -- so a Lix-written lock could
+      # not be evaluated in CI. A github: input round-trips under both.
+      # Tracks the default branch rather than the newest release.
+      url = "github:Svenum/Solaar-Flake";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
