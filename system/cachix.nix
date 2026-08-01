@@ -13,7 +13,14 @@
       "https://attic.xuyh0120.win/lantian"
       "https://hyprland.cachix.org"
     ];
-    trusted-substituters = ["https://hyprland.cachix.org"];
+    # Mirrors `substituters` above: both lists name the same caches, so an
+    # untrusted user can select any cache the system already trusts.
+    trusted-substituters = [
+      "https://cache.nixos.org/"
+      "https://cuda-maintainers.cachix.org"
+      "https://attic.xuyh0120.win/lantian"
+      "https://hyprland.cachix.org"
+    ];
     trusted-public-keys = [
       "cuda-maintainers.cachix.org-1:0dq3bujKpuEPMCX6U4WylrUDZ9JyUG0VpVZa7CNfq5E="
       "lantian:EeAUQ+W+6r7EtwnmYjeVwx5kOGEBpjlBfPlzGlTNvHc="

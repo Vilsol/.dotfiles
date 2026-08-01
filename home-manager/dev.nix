@@ -1,7 +1,6 @@
 {
   pkgs,
-  witr,
-  klados,
+  inputs,
   ...
 }: {
   home.packages = with pkgs; [
@@ -23,7 +22,7 @@
     nil
     python3Minimal
     freelens-bin
-    witr.packages.${pkgs.stdenv.hostPlatform.system}.default
-    klados.packages.${pkgs.stdenv.hostPlatform.system}.default
+    inputs.witr.packages.${pkgs.stdenv.hostPlatform.system}.default
+    inputs.klados.packages.${pkgs.stdenv.hostPlatform.system}.default
   ];
 }

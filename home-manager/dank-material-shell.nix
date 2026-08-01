@@ -1,10 +1,10 @@
 {
   pkgs,
-  dank-material-shell,
+  inputs,
   ...
 }: {
   imports = [
-    dank-material-shell.homeModules.default
+    inputs.dank-material-shell.homeModules.default
   ];
 
   programs.dank-material-shell = {
@@ -20,7 +20,7 @@
     # its result model/cache on close (the per-open rebuild caused the ~1s
     # SUPER+SPACE latency) while still dropping the cache when the app list
     # actually changes, so reopens are fast without going stale.
-    package = dank-material-shell.packages.${pkgs.stdenv.hostPlatform.system}.dms-shell.overrideAttrs (old: {
+    package = inputs.dank-material-shell.packages.${pkgs.stdenv.hostPlatform.system}.dms-shell.overrideAttrs (old: {
       postInstall =
         (old.postInstall or "")
         + ''

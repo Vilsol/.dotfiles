@@ -80,7 +80,7 @@
     };
 
     klados = {
-      url = "git+file:///home/vilsol/Projects/Vilsol/klados";
+      url = "github:Vilsol/klados";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
@@ -91,12 +91,7 @@
     home-manager,
     pre-commit-hooks,
     flake-utils,
-    nixos-hardware,
-    witr,
     solaar,
-    quickshell,
-    dank-material-shell,
-    klados,
     ...
   } @ inputs:
     flake-utils.lib.eachDefaultSystem (
@@ -127,9 +122,9 @@
     // (
       let
         mkSystem = system: name: is-full-desktop: let
-          specialArgs = {
-            inherit inputs nixos-hardware witr quickshell dank-material-shell klados;
-          };
+          # Every module reaches flake inputs as `inputs.<name>`, so adding an
+          # input needs no change here.
+          specialArgs = {inherit inputs;};
 
           modules = [
             {

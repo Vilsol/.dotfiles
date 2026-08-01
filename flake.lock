@@ -716,20 +716,21 @@
       "inputs": {
         "nixpkgs": [
           "nixpkgs"
-        ]
+        ],
+        "nixpkgs-pnpm": "nixpkgs-pnpm"
       },
       "locked": {
-        "lastModified": 1785592388,
-        "narHash": "sha256-mdTsQNTeYYuwb1Wb+QfyJedIoR8L1N9VPcxS9Nj4lQ8=",
-        "ref": "refs/heads/main",
-        "rev": "6bef2411d3e6cf9803c601c7cdbd8fdf7ad940a7",
-        "revCount": 327,
-        "type": "git",
-        "url": "file:///home/vilsol/Projects/Vilsol/klados"
+        "lastModified": 1785612019,
+        "narHash": "sha256-IaRb8nQBrOTsnoU1ucgFDWTV23Xi6Fqj8tUHQwmD0pk=",
+        "owner": "Vilsol",
+        "repo": "klados",
+        "rev": "4acd752bde368c5aa28f72516549d9ab294d7e0b",
+        "type": "github"
       },
       "original": {
-        "type": "git",
-        "url": "file:///home/vilsol/Projects/Vilsol/klados"
+        "owner": "Vilsol",
+        "repo": "klados",
+        "type": "github"
       }
     },
     "lan-mouse": {
@@ -871,6 +872,22 @@
       "original": {
         "owner": "nix-community",
         "repo": "nixpkgs.lib",
+        "type": "github"
+      }
+    },
+    "nixpkgs-pnpm": {
+      "locked": {
+        "lastModified": 1784356753,
+        "narHash": "sha256-12KrbMiWLcf8m7pCvAtZh1ZrgF85ZXDXvfR/fWTKy84=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "61b7c44c4073f0b827768aff0049561b5110ea5a",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "61b7c44c4073f0b827768aff0049561b5110ea5a",
         "type": "github"
       }
     },

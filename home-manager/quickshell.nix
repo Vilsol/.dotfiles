@@ -2,10 +2,10 @@
   pkgs,
   lib,
   config,
-  quickshell,
+  inputs,
   ...
 }: let
-  qs = quickshell.packages.${pkgs.stdenv.hostPlatform.system}.default;
+  qs = inputs.quickshell.packages.${pkgs.stdenv.hostPlatform.system}.default;
 
   # Wrapper around upstream quickshell that injects QML_IMPORT_PATH /
   # QT_PLUGIN_PATH / XDG_DATA_DIRS for every Qt and KDE module the

@@ -3,7 +3,10 @@
   config,
   ...
 }: let
-  localFlakeRoot = "/home/vilsol/.dotfiles/home-manager";
+  # These are mkOutOfStoreSymlink targets, so they must be a path on the live
+  # filesystem rather than in the store. The repo therefore has to live at
+  # ~/.dotfiles for `files/` to resolve.
+  localFlakeRoot = "${config.home.homeDirectory}/.dotfiles/home-manager";
 
   mapRecursive = path: prefix:
     lib.attrsets.mapAttrsToList (

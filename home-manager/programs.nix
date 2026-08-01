@@ -32,7 +32,6 @@
       bubblewrap # cowork-mode sandbox backend for claude-desktop
     ]
     ++ lib.optionals config.my.fullDesktop [
-      # gwe
       # handbrake
       obs-studio
       obs-studio-plugins.obs-pipewire-audio-capture
@@ -41,7 +40,5 @@
 
   services.easyeffects.enable = true;
 
-  # programs.lan-mouse = {
-  #   enable = true;
-  # };
+  programs.lan-mouse.enable = false;
 }
