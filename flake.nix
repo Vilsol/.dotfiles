@@ -24,11 +24,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    nur = {
-      url = "github:nix-community/NUR";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     nix-cachyos-kernel = {
       url = "github:xddxdd/nix-cachyos-kernel/release";
     };
@@ -38,7 +33,11 @@
     };
 
     hyprland = {
-      url = "github:hyprwm/Hyprland?ref=v0.54.3";
+      # Pinned to the 0.56.0 release: master has removed Config::CONFIG_LEGACY
+      # and made CKeybindManager::m_dispatchers private, which breaks
+      # split-monitor-workspaces (it follows this input). Unpin once the plugin
+      # builds against a newer Hyprland.
+      url = "github:hyprwm/Hyprland/v0.56.0";
     };
 
     hyprland-plugins = {
@@ -47,7 +46,7 @@
     };
 
     split-monitor-workspaces = {
-      url = "github:Duckonaut/split-monitor-workspaces?ref=v0.54.2";
+      url = "github:Duckonaut/split-monitor-workspaces";
       inputs.hyprland.follows = "hyprland";
     };
 
@@ -57,7 +56,6 @@
 
     hyprshell = {
       url = "github:H3rmt/hyprshell?ref=hyprshell-release";
-      inputs.hyprland.follows = "hyprland";
     };
 
     lan-mouse = {
@@ -73,6 +71,24 @@
       url = "git+https://git.outfoxxed.me/outfoxxed/quickshell";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    dank-material-shell = {
+      url = "github:AvengeMedia/DankMaterialShell";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    claude-desktop = {
+      # Pinned to 1.9255.2 (last release before the 1.9659.2 bump, whose
+      # patcher fails with "addTrustedFolder anchor not found"; see upstream
+      # issue #677). Revert to unpinned HEAD once the fix PR #674 merges.
+      url = "github:aaddrick/claude-desktop-debian/5dd948e96d853ed37636bc0e2368fc2665cd1104";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    klados = {
+      url = "git+file:///home/vilsol/Projects/Vilsol/klados";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = {
@@ -83,12 +99,13 @@
     pre-commit-hooks,
     flake-utils,
     nixos-hardware,
-    nur,
     nix-cachyos-kernel,
     witr,
     vicinae,
     solaar,
     quickshell,
+    dank-material-shell,
+    klados,
     ...
   } @ inputs:
     flake-utils.lib.eachDefaultSystem (
@@ -130,6 +147,7 @@
             overlays = [
               nix-cachyos-kernel.overlays.pinned
               nix-vscode-extensions.overlays.default
+              inputs.claude-desktop.overlays.default
             ];
           };
 
@@ -147,7 +165,7 @@
           };
 
           specialArgs = {
-            inherit inputs system nixpkgs extensions androidComposition nixos-hardware witr quickshell;
+            inherit inputs system nixpkgs extensions androidComposition nixos-hardware witr quickshell dank-material-shell klados;
           };
 
           modules = [
@@ -156,7 +174,33 @@
             }
 
             {
-              nixpkgs.overlays = [nix-cachyos-kernel.overlays.pinned];
+              nixpkgs.overlays = [
+                nix-cachyos-kernel.overlays.pinned
+                inputs.claude-desktop.overlays.default
+                (_final: prev:
+                  if prev.stdenv.hostPlatform.system == "i686-linux"
+                  then {
+                    openldap = prev.openldap.overrideAttrs (_: {
+                      doCheck = false;
+                    });
+                  }
+                  else {})
+                # patool's tests fail under python 3.14 (nixpkgs#540025); it is
+                # only pulled in as a bottles library dep. pytestCheckHook runs
+                # in installCheckPhase, so doCheck is not the flag to unset.
+                # Drop once that issue closes.
+                (_final: prev: {
+                  pythonPackagesExtensions =
+                    prev.pythonPackagesExtensions
+                    ++ [
+                      (_pyFinal: pyPrev: {
+                        patool = pyPrev.patool.overrideAttrs (_: {
+                          doInstallCheck = false;
+                        });
+                      })
+                    ];
+                })
+              ];
             }
 
             solaar.nixosModules.default
@@ -186,11 +230,6 @@
                 extraSpecialArgs = specialArgs;
               };
             }
-
-            nur.modules.nixos.default
-            ({pkgs, ...}: {
-              environment.systemPackages = [pkgs.nur.repos.xddxdd.flaresolverr-21hsmw];
-            })
           ];
         in
           nixpkgs.lib.nixosSystem {

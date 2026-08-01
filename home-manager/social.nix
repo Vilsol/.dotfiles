@@ -5,7 +5,8 @@
     telegram-desktop
     zapzap
     # quasselClient
-    vesktop
-    discord-canary
+    # vesktop
+    discord
+    # discord-canary
   ];
 }

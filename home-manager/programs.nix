@@ -13,7 +13,7 @@
       fontconfig
       gimp
       dconf-editor
-      gnome-tweaks
+      # gnome-tweaks
       # jellyfin-media-player
       libreoffice-fresh
       pavucontrol
@@ -28,6 +28,8 @@
       termscp
       ddcutil
       ddcui
+      claude-desktop
+      bubblewrap # cowork-mode sandbox backend for claude-desktop
     ]
     ++ lib.optionals config.full-desktop [
       # gwe

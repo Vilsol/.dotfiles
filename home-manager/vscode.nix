@@ -10,7 +10,7 @@
     b4dm4n.nixpkgs-fmt
     bbenoist.nix
     brettm12345.nixfmt-vscode
-    coolbear.systemd-unit-file
+    # coolbear.systemd-unit-file
     eamodio.gitlens
     fabiospampinato.vscode-diff
     golang.go
@@ -38,7 +38,7 @@
     tamasfe.even-better-toml
     tangzx.emmylua
     tilt-dev.tiltfile
-    pkgs.vscode-extensions.visualjj.visualjj
+    # pkgs.vscode-extensions.visualjj.visualjj
     vrtlabs.vscode-lsl
     weaveworks.vscode-gitops-tools
     zxh404.vscode-proto3

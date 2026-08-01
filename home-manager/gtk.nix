@@ -123,6 +123,14 @@
     GTK_THEME = "Adwaita-dark";
   };
 
+  # Interface scaling for GTK/WebKitGTK/Electron apps (read via the GNOME
+  # settings portal). Moved here from the disabled gnome.nix so it survives
+  # without pulling in gnome-shell config.
+  dconf.settings."org/gnome/desktop/interface" = {
+    "text-scaling-factor" = 1.5;
+    "cursor-size" = 32;
+  };
+
   # Qt theming to match GTK (for Qt-based tray icons)
   qt = {
     enable = true;

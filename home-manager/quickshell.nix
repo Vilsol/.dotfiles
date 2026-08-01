@@ -2,11 +2,75 @@
   pkgs,
   quickshell,
   ...
-}: {
+}: let
+  qs = quickshell.packages.${pkgs.stdenv.hostPlatform.system}.default;
+
+  # Wrapper around upstream quickshell that injects QML_IMPORT_PATH /
+  # QT_PLUGIN_PATH / XDG_DATA_DIRS for every Qt and KDE module the
+  # dots-hyprland config imports. wrapQtAppsHook crawls buildInputs (and
+  # their propagatedBuildInputs) and bakes the right paths into the wrapper
+  # script. Without this, kdePackages.kirigami etc. are dev-only wrappers
+  # whose `out` is empty, so `home.packages` symlinks nothing usable.
+  # Mirrors sdata/dist-nix/home-manager/quickshell.nix upstream.
+  quickshell-wrapped = pkgs.stdenv.mkDerivation {
+    name = "quickshell-wrapper";
+
+    dontUnpack = true;
+    dontConfigure = true;
+    dontBuild = true;
+
+    nativeBuildInputs = [
+      pkgs.makeWrapper
+      pkgs.qt6.wrapQtAppsHook
+    ];
+
+    buildInputs = with pkgs; [
+      qs
+      kdePackages.qtwayland
+      kdePackages.qtpositioning
+      kdePackages.qtlocation
+      kdePackages.syntax-highlighting
+      gsettings-desktop-schemas
+      # https://nixos.wiki/wiki/Qt
+      # https://github.com/NixOS/nixpkgs/blob/master/pkgs/development/libraries/qt-6/srcs.nix
+      qt6.qtbase
+      qt6.qtdeclarative
+      qt6.qt5compat
+      qt6.qtimageformats
+      qt6.qtmultimedia
+      qt6.qtpositioning
+      qt6.qtquicktimeline
+      qt6.qtsensors
+      qt6.qtsvg
+      qt6.qttools
+      qt6.qttranslations
+      qt6.qtvirtualkeyboard
+      qt6.qtwayland
+      kdePackages.kirigami
+      kdePackages.kdialog
+      vulkan-headers
+      libdrm
+      cpptrace
+      jemalloc
+      mesa
+    ];
+
+    installPhase = ''
+      mkdir -p $out/bin
+      for bin in qs quickshell; do
+        makeWrapper ${qs}/bin/$bin $out/bin/$bin \
+          --prefix XDG_DATA_DIRS : "${pkgs.gsettings-desktop-schemas}/share/gsettings-schemas/${pkgs.gsettings-desktop-schemas.name}"
+      done
+    '';
+  };
+in {
   fonts.fontconfig.enable = true;
 
   home.packages = with pkgs; [
-    quickshell.packages.${pkgs.stdenv.hostPlatform.system}.default
+    # Disabled: collides with DMS's `programs.quickshell.enable = true`.
+    # To fall back to dots-hyprland: comment out dank-material-shell.nix
+    # import and re-add this line.
+    # quickshell-wrapped
 
     ##### Sure #####
     ## Basic cli tool
@@ -17,7 +81,7 @@
 
     ##### Other MISC #####
     dbus
-    xorg.xlsclients # some basic things
+    xlsclients # some basic things
     foot # Used in Quickshell and Hyprland config; its config is also included
     kdePackages.kconfig # provide kwriteconfig6, used in install script
 
@@ -60,7 +124,6 @@
     kdePackages.breeze-icons #breeze
     #breeze-plus (TODO: Not available as nixpkg)
     darkly
-    darkly-qt5 #darkly-bin
     eza #eza
     #fish (Currently install via system PM; TODO: should install via nix in future when authentication problem fixed)
     fontconfig #fontconfig
@@ -130,36 +193,5 @@
     translate-shell #translate-shell
     wlogout #wlogout
     libqalculate #libqalculate
-
-    #qs
-    kdePackages.qtwayland
-    kdePackages.qtpositioning
-    kdePackages.qtlocation
-    kdePackages.syntax-highlighting
-    gsettings-desktop-schemas
-    # https://nixos.wiki/wiki/Qt
-    # https://github.com/NixOS/nixpkgs/blob/master/pkgs/development/libraries/qt-6/srcs.nix
-    qt6.qtbase #qt6-base
-    qt6.qtdeclarative #qt6-declarative
-    qt6.qt5compat #qt6-5compat
-    #qt6-avif-image-plugin (TODO: seems not available as nixpkg)
-    qt6.qtimageformats #qt6-imageformats
-    qt6.qtmultimedia #qt6-multimedia
-    qt6.qtpositioning #qt6-positioning
-    qt6.qtquicktimeline #qt6-quicktimeline
-    qt6.qtsensors #qt6-sensors
-    qt6.qtsvg #qt6-svg
-    qt6.qttools #qt6-tools
-    qt6.qttranslations #qt6-translations
-    qt6.qtvirtualkeyboard #qt6-virtualkeyboard
-    qt6.qtwayland #qt6-wayland
-    kdePackages.kirigami #kirigami
-    kdePackages.kdialog #kdialog
-    kdePackages.syntax-highlighting #syntax-highlighting
-    vulkan-headers #vulkan-headers
-    libdrm #libdrm
-    cpptrace #cpptrace
-    jemalloc #jemalloc
-    mesa #mesa
   ];
 }

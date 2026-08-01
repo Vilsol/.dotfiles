@@ -57,10 +57,9 @@
 
   environment.systemPackages = with pkgs;
     lib.optionals config.full-desktop [
-      flutter
-      android-tools
-      (androidStudioPackages.beta.full.withSdk androidComposition.androidsdk)
-      # pkgs.nur.repos.xddxdd.flaresolverr-21hsmw
+      # flutter
+      # android-tools
+      # (androidStudioPackages.beta.full.withSdk androidComposition.androidsdk)
     ];
   nixpkgs.config = {
     permittedInsecurePackages = [

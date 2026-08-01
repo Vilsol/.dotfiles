@@ -1,0 +1,24 @@
+--- a/Modals/DankLauncherV2/Controller.qml
++++ b/Modals/DankLauncherV2/Controller.qml
+@@ -56,10 +56,7 @@
+             return;
+ 
+         SessionData.addLauncherHistory(searchQuery, explicitQuerySession);
+-        sections = [];
+-        flatModel = [];
+         selectedItem = null;
+-        _clearModeCache();
+     }
+ 
+     onSearchModeChanged: {
+@@ -118,9 +115,9 @@
+     Connections {
+         target: AppSearchService
+         function onCacheVersionChanged() {
++            _clearModeCache();
+             if (!active)
+                 return;
+-            _clearModeCache();
+             if (searchMode === "apps") {
+                 _loadAppCategories();
+                 performSearch();

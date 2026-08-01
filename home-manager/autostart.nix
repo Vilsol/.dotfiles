@@ -10,7 +10,7 @@
     ]
     ++ lib.optionals config.full-desktop [
       pkgs.telegram-desktop
-      pkgs.vesktop
+      pkgs.discord
     ];
 in {
   home.file = builtins.listToAttrs (map

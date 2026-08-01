@@ -20,8 +20,6 @@
         };
       };
       diff = {
-        tool = "difftastic";
-        external = "difft";
         lockdb = {
           textconf = "bun";
           binary = true;

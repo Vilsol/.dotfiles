@@ -1,6 +1,27 @@
-_: {
+{pkgs, ...}: {
   programs.waybar = {
-    enable = true;
+    enable = false;
+
+    # Pin to upstream master for Hyprland 0.55 Lua-mode workspace click fix
+    # (Alexays/Waybar PR #5013, merged 2026-05-04, post-0.15.0).
+    # cavaSupport is disabled because master's cava subproject layout doesn't
+    # match the version nixpkgs vendors in postUnpack. You don't use the cava
+    # module anyway; re-enable here if you ever add it.
+    # Drop this whole override once a release including #5013 is in nixpkgs.
+    package = (pkgs.waybar.override {cavaSupport = false;}).overrideAttrs (_old: {
+      version = "0.15.0-unstable-2026-05-04";
+      src = pkgs.fetchFromGitHub {
+        owner = "Alexays";
+        repo = "Waybar";
+        rev = "05945748dccce28bf96d26d8f64a9e69a8dd49ba";
+        hash = "sha256-51R3mIt8cLNvh/X5qe9vOqeJCj0U9KRyemVE5y+OhiU=";
+      };
+      # waybar's binary still self-reports 0.15.0 (master didn't bump version
+      # string), but our `version` attr includes the unstable date suffix.
+      # nixpkgs' versionCheckPhase compares the two and fails.
+      doInstallCheck = false;
+    });
+
     systemd = {
       enable = true;
       targets = ["hyprland-session.target"];
@@ -51,8 +72,15 @@ _: {
             "format" = "{icon}";
           };
           all-outputs = false;
-          on-scroll-up = "hyprctl dispatch split-workspace r-1";
-          on-scroll-down = "hyprctl dispatch split-workspace r+1";
+          # Per-workspace-button clicks are handled by waybar's patched
+          # IPC::dispatch (PR #5013) — module-level on-click only fires for
+          # empty module space, so configuring it doesn't help.
+          # Scroll handlers stay overridden because hypr-smw uses the plugin's
+          # per-monitor relative dispatcher ("r-1"/"r+1"), which is more
+          # accurate for the split-monitor-workspaces setup than waybar's
+          # built-in "m-1"/"m+1" path.
+          on-scroll-up = "hypr-smw workspace r-1";
+          on-scroll-down = "hypr-smw workspace r+1";
         };
 
         "hyprland/window" = {

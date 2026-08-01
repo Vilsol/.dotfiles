@@ -6,7 +6,7 @@
 
   programs.mangohud = {
     enable = true;
-    enableSessionWide = true;
+    enableSessionWide = false;
     settings = {
       arch = true;
       background_alpha = 0.4;

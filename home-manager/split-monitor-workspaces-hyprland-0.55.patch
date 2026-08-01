@@ -1,0 +1,50 @@
+diff --git a/src/helpers.cpp b/src/helpers.cpp
+--- a/src/helpers.cpp
++++ b/src/helpers.cpp
+@@ -158,7 +158,7 @@
+         for (const auto& workspaceName : curWorkspaces) {
+             PHLWORKSPACE workspacePtr = State::workspaceState()->query().name(workspaceName).run();
+             // the workspace we want is either not yet created (=nullptr) or already created but empty (!= nullptr but no windows)
+-            if (workspacePtr == nullptr || workspacePtr->getWindows() == 0) {
++            if (workspacePtr == nullptr || workspacePtr->getWindowCount() == 0) {
+                 return workspaceName;
+             }
+         }
+diff --git a/src/main.cpp b/src/main.cpp
+--- a/src/main.cpp
++++ b/src/main.cpp
+@@ -5,6 +5,7 @@
+ #include <hyprland/src/debug/log/Logger.hpp>
+ #include <hyprland/src/state/MonitorState.hpp>
+ #include <hyprland/src/state/WorkspaceState.hpp>
++#include <hyprland/src/state/WorkspacePlacementController.hpp>
+ #include <hyprutils/string/VarList2.hpp>
+ #include <hyprutils/utils/ScopeGuard.hpp>
+
+@@ -182,7 +183,7 @@
+         return {.success = false, .error = "No active workspace found"};
+     }
+
+-    for (const auto& window : g_pCompositor->m_windows) {
++    for (const auto& window : Desktop::windowState()->windows()) {
+         // ignore unmapped and special windows
+         if (!window->m_isMapped && !window->onSpecialWorkspace())
+             continue;
+@@ -195,7 +196,7 @@
+         if (isInRogueWorkspace) {
+             Log::logger->log(Log::INFO, "[split-monitor-workspaces] Moving rogue window {} from workspace {} to workspace {}", window->m_title.c_str(), workspaceName.c_str(),
+                              currentWorkspace->m_name.c_str());
+-            g_pCompositor->moveWindowToWorkspaceSafe(window, currentWorkspace);
++            window->moveToWorkspace(currentWorkspace);
+         }
+     }
+     return {.success = true, .error = ""};
+@@ -238,7 +239,7 @@
+         }
+         if (workspace.get() != nullptr) {
+             Log::logger->log(Log::INFO, "[split-monitor-workspaces] Moving workspace {} to monitor {}", workspaceName, monitor->m_name);
+-            g_pCompositor->moveWorkspaceToMonitor(workspace, monitor);
++            State::workspacePlacementController()->moveWorkspaceToMonitor(workspace, monitor);
+             if (g_config.enablePersistentWorkspaces->value()) {
+                 workspace->setPersistent(true);
+                 g_vPersistentWorkspaces.push_back(workspace); // keep a reference to avoid it being destructed (see https://github.com/hyprwm/Hyprland/discussions/11400#discussioncomment-14085672)

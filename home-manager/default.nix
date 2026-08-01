@@ -5,7 +5,7 @@
     ./files.nix
     ./games.nix
     ./git.nix
-    ./gnome.nix
+    # ./gnome.nix
     ./gtk.nix
     ./home.nix
     ./mangohud.nix
@@ -18,10 +18,11 @@
     ./zsh.nix
     ./hyprland.nix
     ./waybar.nix
-    ./vicinae.nix
+    # ./vicinae.nix
     ./hyprlock.nix
     ./hypridle.nix
     ./hyprpaper.nix
     ./quickshell.nix
+    ./dank-material-shell.nix
   ];
 }

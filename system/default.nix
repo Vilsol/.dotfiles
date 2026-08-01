@@ -1,6 +1,7 @@
 {lib, ...}: {
   imports = [
     ./ai.nix
+    ./attic.nix
     # ./background-updates.nix
     ./cachix.nix
     ./common.nix

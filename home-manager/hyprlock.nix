@@ -38,7 +38,7 @@ _: {
         # Time
         {
           monitor = "";
-          text = ''cmd[update:1000] echo "<b><big>$(date +"%H:%M")</big></b>"'';
+          text = "<b><big>$TIME</big></b>";
           color = "rgb(202, 211, 245)";
           font_size = 64;
           font_family = "JetBrainsMono Nerd Font";
