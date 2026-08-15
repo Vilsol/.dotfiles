@@ -27,7 +27,8 @@
     powerline-fonts
   ];
 
-  i18n.inputMethod.ibus.engines = with pkgs.ibus-engines; [mozc];
-  # i18n.inputMethod.enabled = "fcitx";
-  # i18n.inputMethod.fcitx.engines = with pkgs.fcitx-engines; [ mozc ];
+  # services.desktopManager.gnome mkDefaults this to true+ibus, which autostarts
+  # ibus-daemon --xim under Hyprland and pops a "IBus should be called from the
+  # desktop session" notification on every login.
+  i18n.inputMethod.enable = false;
 }
