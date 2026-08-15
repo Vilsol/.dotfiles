@@ -20,8 +20,9 @@
     (lib.lowPrio minikube)
     mise
     nil
-    python3Minimal
+    python3
     freelens-bin
+    obscura
     inputs.witr.packages.${pkgs.stdenv.hostPlatform.system}.default
     inputs.klados.packages.${pkgs.stdenv.hostPlatform.system}.default
   ];
