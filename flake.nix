@@ -56,16 +56,6 @@
       url = "github:feschber/lan-mouse";
     };
 
-    solaar = {
-      # Not the flakehub tarball: Lix locks that URL with ?rev=&revCount=
-      # query params, upstream Nix re-fetches it without them, and
-      # fetchTreeFinal then rejects the mismatch -- so a Lix-written lock could
-      # not be evaluated in CI. A github: input round-trips under both.
-      # Tracks the default branch rather than the newest release.
-      url = "github:Svenum/Solaar-Flake";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     quickshell = {
       url = "git+https://git.outfoxxed.me/outfoxxed/quickshell";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -96,7 +86,6 @@
     home-manager,
     pre-commit-hooks,
     flake-utils,
-    solaar,
     ...
   } @ inputs:
     flake-utils.lib.eachDefaultSystem (
@@ -135,8 +124,6 @@
             {
               nixpkgs.overlays = import ./overlays inputs;
             }
-
-            solaar.nixosModules.default
 
             (./. + "/system/machines/${name}/configuration.nix")
 
