@@ -59,6 +59,6 @@
     package = pkgs.gnomeExtensions.gsconnect;
   };
 
-  hardware.logitech.wireless.enable = true;
-  hardware.logitech.wireless.enableGraphical = true; # This specifically installs Solaar
+  # Pulls in hardware.logitech.wireless.enable itself.
+  programs.solaar.enable = true;
 }
