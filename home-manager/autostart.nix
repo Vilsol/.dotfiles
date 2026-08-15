@@ -4,40 +4,35 @@
   config,
   ...
 }: let
+  # The .desktop file name is spelled out instead of discovered with readDir:
+  # reading share/applications forces the package to be realised during
+  # evaluation, so any version bump that is not built yet aborts the whole
+  # rebuild.
   autostartPrograms =
     [
-      pkgs._1password-gui
+      {
+        package = pkgs._1password-gui;
+        desktopFile = "1password.desktop";
+      }
     ]
     ++ lib.optionals config.my.fullDesktop [
-      pkgs.telegram-desktop
-      pkgs.discord
+      {
+        package = pkgs.telegram-desktop;
+        desktopFile = "org.telegram.desktop.desktop";
+      }
+      {
+        package = pkgs.discord;
+        desktopFile = "discord.desktop";
+      }
     ];
 in {
   home.file = builtins.listToAttrs (map
-    (pkg: {
-      name = ".config/autostart/" + pkg.pname + ".desktop";
-      value =
-        if pkg ? desktopItem
-        then {
-          # Application has a desktopItem entry.
-          # Assume that it was made with makeDesktopEntry, which exposes a
-          # text attribute with the contents of the .desktop file
-          inherit (pkg.desktopItem) text;
-        }
-        else {
-          # Application does *not* have a desktopItem entry. Try to find a
-          # matching .desktop name in /share/applications
-          source =
-            pkg
-            + "/share/applications/"
-            + (
-              lib.lists.findFirst (name: (lib.strings.hasSuffix ".desktop" name)) "NULL" (
-                lib.attrsets.mapAttrsToList (name: _: name) (
-                  builtins.readDir (pkg + "/share/applications/")
-                )
-              )
-            );
-        };
+    ({
+      package,
+      desktopFile,
+    }: {
+      name = ".config/autostart/${package.pname}.desktop";
+      value.source = "${package}/share/applications/${desktopFile}";
     })
     autostartPrograms);
 }
