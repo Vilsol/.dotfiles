@@ -13,12 +13,23 @@
     plugins = [
       # Disabled: hyprbars (DMS handles window decorations natively)
       # inputs.hyprland-plugins.packages.${pkgs.stdenv.hostPlatform.system}.hyprbars
-      inputs.split-monitor-workspaces.packages.${pkgs.stdenv.hostPlatform.system}.split-monitor-workspaces
+      #
+      # split-monitor-workspaces is no longer a C++ plugin. Upstream gutted it to
+      # a stub that only logs a deprecation notice (registering no dispatchers and
+      # no hl.plugin API) and reshipped the functionality as a Lua package, which
+      # hypr-extras.lua requires off the package.path set below.
     ];
 
-    systemd.variables = ["--all"];
+    # uwsm owns graphical-session.target, so HM's duplicate session integration
+    # must stay off. It generates hyprland-session.target plus a hyprland.start
+    # hook that bounces it; since HM gained PropagatesStopTo=graphical-session.target
+    # that stop cascades through wayland-session@ -> wayland-wm@ and kills the
+    # compositor ~1s into every login. uwsm finalize already does the
+    # dbus-update-activation-environment/import-environment work this replaced.
+    systemd.enable = false;
 
     extraConfig = ''
+      package.path = package.path .. ";${inputs.split-monitor-workspaces}/lua/?.lua"
       require("hypr-extras")
     '';
   };
@@ -55,17 +66,19 @@
       ${hyprland}/bin/hyprctl keyword general:border_size "$BORDER_SIZE"
     '')
 
-    # Wrapper for split-monitor-workspaces dispatchers under Hyprland 0.55 Lua mode.
+    # Wrapper for split-monitor-workspaces dispatchers under Hyprland Lua mode.
     # `hyprctl dispatch X Y` is server-side wrapped as `hl.dispatch(X Y)` which is
-    # a Lua syntax error for plugin dispatchers. We instead send an IIFE that
-    # invokes the plugin's Lua API and returns a real dispatcher object.
+    # a Lua syntax error, so we still send an IIFE. require() hits package.loaded
+    # (the module is already loaded by hypr-extras.lua off the package.path set
+    # above), and the Lua package returns real dispatchers, so we return directly
+    # instead of the old exec_cmd("true") stand-in the C++ API needed.
     (writeShellScriptBin "hypr-smw" ''
       case "$1" in
         workspace)
-          ${hyprland}/bin/hyprctl dispatch "(function() hl.plugin.split_monitor_workspaces.workspace(\"$2\"); return hl.dsp.exec_cmd(\"true\") end)()"
+          ${hyprland}/bin/hyprctl dispatch "(function() return require(\"split-monitor-workspaces\").workspace(\"$2\") end)()"
           ;;
         move-silent)
-          ${hyprland}/bin/hyprctl dispatch "(function() hl.plugin.split_monitor_workspaces.move_to_workspace_silent(\"$2\"); return hl.dsp.exec_cmd(\"true\") end)()"
+          ${hyprland}/bin/hyprctl dispatch "(function() return require(\"split-monitor-workspaces\").move_to_workspace_silent(\"$2\") end)()"
           ;;
         *)
           echo "Usage: hypr-smw {workspace|move-silent} <arg>" >&2

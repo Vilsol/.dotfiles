@@ -65,8 +65,8 @@ end)
 -- All hyprbars config/window-rules below were removed when the plugin was
 -- disabled; restore from git history if you re-enable hyprbars.
 --
--- split-monitor-workspaces has no parse-time config (its keys all reported
--- "unknown" against the current plugin version; defaults are in effect).
+-- split-monitor-workspaces is a Lua package, not a plugin: it is configured
+-- through smw.setup() in the keybinds section, not by parse-time config keys.
 
 
 -----------------------
@@ -166,27 +166,31 @@ hl.bind("SUPER + Right", hl.dsp.focus({ direction = "r" }))
 hl.bind("SUPER + Up",    hl.dsp.focus({ direction = "u" }))
 hl.bind("SUPER + Down",  hl.dsp.focus({ direction = "d" }))
 
--- split-monitor-workspaces plugin: switch workspace
--- Call the plugin's Lua API directly. `hyprctl dispatch <name> <args>` is
--- broken in Hyprland 0.55 (server wraps it as `hl.dispatch(<name> <args>)`
--- which is invalid Lua). Plugin functions execute immediately rather than
--- returning a dispatcher, so they must be wrapped in a closure for hl.bind.
-local smw = hl.plugin.split_monitor_workspaces
-for i = 1, 9 do
-    hl.bind("SUPER + " .. i,         function() smw.workspace(tostring(i)) end)
-    hl.bind("SUPER + SHIFT + " .. i, function() smw.move_to_workspace_silent(tostring(i)) end)
-end
-hl.bind("SUPER + 0",         function() smw.workspace("10") end)
-hl.bind("SUPER + SHIFT + 0", function() smw.move_to_workspace_silent("10") end)
+-- split-monitor-workspaces: switch workspace. Required off the package.path
+-- that hyprland.nix prepends. Unlike the old C++ plugin's hl.plugin API, these
+-- return dispatchers rather than executing, so no closure wrapper is needed.
+local smw = require("split-monitor-workspaces")
+smw.setup({
+    workspace_count  = 10,
+    monitor_priority = { "DP-2", "DP-3" },
+    keep_focused     = true,
+})
 
-hl.bind("SUPER + bracketleft",  function() smw.workspace("r-1") end)
-hl.bind("SUPER + bracketright", function() smw.workspace("r+1") end)
+for i = 1, 9 do
+    hl.bind("SUPER + " .. i,         smw.workspace(tostring(i)))
+    hl.bind("SUPER + SHIFT + " .. i, smw.move_to_workspace_silent(tostring(i)))
+end
+hl.bind("SUPER + 0",         smw.workspace("10"))
+hl.bind("SUPER + SHIFT + 0", smw.move_to_workspace_silent("10"))
+
+hl.bind("SUPER + bracketleft",  smw.cycle_workspaces("prev"))
+hl.bind("SUPER + bracketright", smw.cycle_workspaces("next"))
 
 hl.bind("SUPER + S",         hl.dsp.workspace.toggle_special("magic"))
 hl.bind("SUPER + SHIFT + S", hl.dsp.window.move({ workspace = "special:magic" }))
 
-hl.bind("SUPER + mouse_down", function() smw.workspace("r-1") end)
-hl.bind("SUPER + mouse_up",   function() smw.workspace("r+1") end)
+hl.bind("SUPER + mouse_down", smw.cycle_workspaces("prev"))
+hl.bind("SUPER + mouse_up",   smw.cycle_workspaces("next"))
 
 hl.bind("SUPER + mouse:272", hl.dsp.window.drag(),   { mouse = true })
 hl.bind("SUPER + mouse:273", hl.dsp.window.resize(), { mouse = true })
@@ -215,6 +219,13 @@ hl.layer_rule({ match = { namespace = "vicinae" }, blur = true, ignore_alpha = 0
 hl.bind("XF86AudioRaiseVolume", hl.dsp.exec_cmd("wpctl set-volume -l 1.0 @DEFAULT_AUDIO_SINK@ 5%+"), { locked = true, repeating = true })
 hl.bind("XF86AudioLowerVolume", hl.dsp.exec_cmd("wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"),        { locked = true, repeating = true })
 hl.bind("XF86AudioMute",        hl.dsp.exec_cmd("wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"),        { locked = true })
+
+-- Lizard button. F13 (evdev 183) -> xkb keycode 191; the us,lv keymap leaves
+-- F13-F24 unmapped, so there is no keysym to bind and `code:` is the only way.
+-- Path points at the repo rather than ~/.local/share/sounds so it works without
+-- a nixos-rebuild; swap to the short path once files/ has been switched in.
+hl.bind("code:191", hl.dsp.exec_cmd(
+    "pw-play " .. os.getenv("HOME") .. "/.dotfiles/home-manager/files/.local/share/sounds/lizard.mp3"))
 
 
 ------------------------------------

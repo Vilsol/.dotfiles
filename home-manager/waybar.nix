@@ -75,12 +75,12 @@
           # Per-workspace-button clicks are handled by waybar's patched
           # IPC::dispatch (PR #5013) — module-level on-click only fires for
           # empty module space, so configuring it doesn't help.
-          # Scroll handlers stay overridden because hypr-smw uses the plugin's
-          # per-monitor relative dispatcher ("r-1"/"r+1"), which is more
-          # accurate for the split-monitor-workspaces setup than waybar's
-          # built-in "m-1"/"m+1" path.
-          on-scroll-up = "hypr-smw workspace r-1";
-          on-scroll-down = "hypr-smw workspace r+1";
+          # Scroll handlers stay overridden because hypr-smw uses the package's
+          # per-monitor relative dispatcher ("-1"/"+1"), which is more accurate
+          # for the split-monitor-workspaces setup than waybar's built-in
+          # "m-1"/"m+1" path. The "r" prefix was the old C++ plugin's syntax.
+          on-scroll-up = "hypr-smw workspace -1";
+          on-scroll-down = "hypr-smw workspace +1";
         };
 
         "hyprland/window" = {
