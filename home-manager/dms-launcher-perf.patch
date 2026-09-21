@@ -11,14 +11,14 @@
      }
  
      onSearchModeChanged: {
-@@ -118,9 +115,9 @@
-     Connections {
-         target: AppSearchService
-         function onCacheVersionChanged() {
-+            _clearModeCache();
-             if (!active)
-                 return;
--            _clearModeCache();
-             if (searchMode === "apps") {
-                 _loadAppCategories();
-                 performSearch();
+@@ -120,9 +117,9 @@
+     readonly property int searchCacheVersion: AppSearchService.cacheVersion
+ 
+     onSearchCacheVersionChanged: {
++        _clearModeCache();
+         if (!active)
+             return;
+-        _clearModeCache();
+         if (searchMode === "apps") {
+             _loadAppCategories();
+             performSearch();

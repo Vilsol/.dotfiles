@@ -31,11 +31,17 @@
     };
 
     hyprland = {
-      # Pinned to the 0.56.0 release: master has removed Config::CONFIG_LEGACY
-      # and made CKeybindManager::m_dispatchers private, which breaks
-      # split-monitor-workspaces (it follows this input). Unpin once the plugin
-      # builds against a newer Hyprland.
-      url = "github:hyprwm/Hyprland/v0.56.0";
+      # Tracks main, pinned by flake.lock. NOT a 0.56.x tag: v0.56.0/.1/.2 all ship
+      # the same Fifo.cpp that fifo-locks on wp_fifo_v1.wait_barrier alone. Both the
+      # NVIDIA and Mesa Vulkan WSIs send an extra empty wait_barrier commit per frame
+      # as a liveness safeguard, so that dummy commit gets held for a whole refresh:
+      # native Wayland clients present 5 refreshes per 4 frames (48fps on a 60Hz
+      # output). Fixed upstream only on main, by 6484f43 (PR #15504), which gates the
+      # lock on `barrierSet && barrierWait`. Never backported to 0.56.x.
+      #
+      # The old "master breaks split-monitor-workspaces" pin no longer applies: the
+      # plugin is a Lua package now, not a C++ plugin, so nothing links its ABI.
+      url = "github:hyprwm/Hyprland";
     };
 
     hyprland-plugins = {
