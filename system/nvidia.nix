@@ -1,10 +1,20 @@
-{pkgs, ...}: {
+{
+  config,
+  pkgs,
+  ...
+}: {
   services.xserver.videoDrivers = ["nvidia"];
 
   hardware = {
     graphics.enable = true;
     nvidia = {
       # package = config.boot.kernelPackages.nvidiaPackages.beta;
+      # The pinned cachyos overlay builds kernelPackages from its own older
+      # nixpkgs, so its nvidiaPackages lag ours. Take the driver set from our
+      # nixpkgs but build it against the cachyos kernel.
+      package =
+        (config.boot.kernelPackages.callPackage
+          "${pkgs.path}/pkgs/os-specific/linux/nvidia-x11" {}).new_feature;
       modesetting.enable = true;
       open = true;
 
