@@ -35,29 +35,42 @@
   };
 in {
   systemd = {
+    # uwsm moves XDG autostart apps into app.slice/app-graphical.slice, whose
+    # dmem.low stays 0 and so caps whatever the booster gives its children.
+    # Put them back in app.slice; drop-ins apply in filename order, so zz- wins
+    # over uwsm's slice-tweak.conf.
+    packages = [
+      (pkgs.writeTextDir "lib/systemd/user/app-@autostart.service.d/zz-dmem-slice.conf" ''
+        [Service]
+        Slice=app.slice
+      '')
+    ];
+
     services.dmemcg-booster-system = {
       description = "Enable dmem cgroup protection, system level";
       wantedBy = ["multi-user.target"];
       serviceConfig.ExecStart = "${dmemcg-booster}/bin/dmemcg-booster --use-system-bus";
     };
 
-    user.services.dmemcg-booster-user = {
-      description = "Enable dmem cgroup protection, user level";
-      wantedBy = ["graphical-session-pre.target"];
-      serviceConfig.ExecStart = "${dmemcg-booster}/bin/dmemcg-booster";
-    };
+    user = {
+      services.dmemcg-booster-user = {
+        description = "Enable dmem cgroup protection, user level";
+        wantedBy = ["graphical-session-pre.target"];
+        serviceConfig.ExecStart = "${dmemcg-booster}/bin/dmemcg-booster";
+      };
 
-    user.services.hyprland-focused-booster = {
-      description = "Give the focused Hyprland app VRAM priority";
-      after = ["dmemcg-booster-user.service" "graphical-session.target"];
-      partOf = ["graphical-session.target"];
-      wantedBy = ["graphical-session.target"];
-      # GDM also offers GNOME; there is no Hyprland socket to listen on there.
-      unitConfig.ConditionEnvironment = "HYPRLAND_INSTANCE_SIGNATURE";
-      serviceConfig = {
-        ExecStart = "${hyprland-focused-booster}/bin/hyprland-focused-booster";
-        Restart = "on-failure";
-        RestartSec = 2;
+      services.hyprland-focused-booster = {
+        description = "Give the focused Hyprland app VRAM priority";
+        after = ["dmemcg-booster-user.service" "graphical-session.target"];
+        partOf = ["graphical-session.target"];
+        wantedBy = ["graphical-session.target"];
+        # GDM also offers GNOME; there is no Hyprland socket to listen on there.
+        unitConfig.ConditionEnvironment = "HYPRLAND_INSTANCE_SIGNATURE";
+        serviceConfig = {
+          ExecStart = "${hyprland-focused-booster}/bin/hyprland-focused-booster";
+          Restart = "on-failure";
+          RestartSec = 2;
+        };
       };
     };
   };
