@@ -2,6 +2,7 @@
   imports = [
     ../../default.nix
     ../../nvidia.nix
+    ../../dmemcg.nix
     ./hardware-configuration.nix
     ./swap.nix
   ];
