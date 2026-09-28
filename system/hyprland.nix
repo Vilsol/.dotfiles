@@ -7,7 +7,13 @@
     enable = true;
     withUWSM = true;
 
-    package = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland;
+    # Opening Firefox Nightly segfaulted the whole session: t1Parent() walks the
+    # subsurface parent chain assuming every link is alive, but a client may
+    # destroy a parent wl_surface before its children and then parent a new
+    # subsurface under an orphaned one. Unfixed on main as of 2026-09-22.
+    package = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland.overrideAttrs (old: {
+      patches = (old.patches or []) ++ [./hyprland-subsurface-orphan-parent.patch];
+    });
     portalPackage = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.xdg-desktop-portal-hyprland;
   };
 
