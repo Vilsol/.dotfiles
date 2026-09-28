@@ -7,6 +7,7 @@
     inputs.nixos-hardware.nixosModules.framework-12th-gen-intel
     ../../default.nix
     ./hardware-configuration.nix
+    {home-manager.users.vilsol.imports = [../../../home-manager/gnome.nix];}
   ];
 
   boot = {
