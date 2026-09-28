@@ -1,4 +1,8 @@
-{pkgs, ...}: {
+{
+  pkgs,
+  inputs,
+  ...
+}: {
   environment.sessionVariables = {
     MOZ_ENABLE_WAYLAND = "1";
   };
@@ -16,6 +20,7 @@
     };
 
     firefox = {
+      package = inputs.firefox-nightly.packages.${pkgs.stdenv.hostPlatform.system}.firefox-nightly-bin;
       enable = true;
       preferences = {
         "media.hardwaremediakeys.enabled" = false;

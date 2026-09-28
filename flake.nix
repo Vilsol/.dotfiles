@@ -80,6 +80,16 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    firefox-nightly = {
+      # Nightly, not release: release/beta hard-block DMABuf WebGL on every NVIDIA
+      # proprietary driver (bug 1924578), so WebGL frames get read back and
+      # re-uploaded. Street View / GeoGuessr at 4K lag badly. Nightly only
+      # blocks drivers 470..580.76.05 (bug 1981326). gfx.blocklist.all is
+      # compiled out on release, so there's no pref to lift it there.
+      url = "github:nix-community/flake-firefox-nightly";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     klados = {
       url = "github:Vilsol/klados";
       inputs.nixpkgs.follows = "nixpkgs";
