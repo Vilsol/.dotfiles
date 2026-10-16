@@ -7,6 +7,11 @@
     MOZ_ENABLE_WAYLAND = "1";
   };
 
+  environment.etc."1password/custom_allowed_browsers" = {
+    text = "firefox-nightly-bin\n";
+    mode = "0755";
+  };
+
   programs = {
     _1password-gui = {
       enable = true;

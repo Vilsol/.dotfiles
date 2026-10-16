@@ -3,6 +3,7 @@
     ../../default.nix
     ../../nvidia.nix
     ../../dmemcg.nix
+    ../../vr.nix
     ./hardware-configuration.nix
     ./swap.nix
   ];
