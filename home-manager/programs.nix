@@ -6,7 +6,7 @@
   ...
 }: let
   # The capture device EasyEffects pins in its own config (StreamInputs/inputDevice).
-  easyeffectsInput = "alsa_input.usb-Blue_Microphones_Yeti_Stereo_Microphone_REV8_2017_9_29_80297-00.iec958-stereo";
+  easyeffectsInput = "alsa_input.usb-Blue_Microphones_Yeti_Stereo_Microphone_REV8_2017_9_29_80297-00.analog-stereo";
 
   # Ordering after wireplumber only guarantees the session manager started, not
   # that USB enumeration finished, so block on the node actually existing.
@@ -68,7 +68,15 @@ in {
       ];
       Wants = ["pipewire.service" "wireplumber.service" "pipewire-pulse.service"];
     };
-    Service.ExecStartPre = "${waitForNode} ${easyeffectsInput}";
+    Service = {
+      ExecStartPre = "${waitForNode} ${easyeffectsInput}";
+      # Never exits on --quit/SIGTERM, so every restart sat out upstream's 10s.
+      TimeoutStopSec = lib.mkForce 5;
+      # DeepFilterNet underruns (RTF 5+) when builds saturate the CPU. Nice=-10
+      # is not an option: user units have RLIMIT_NICE 0. Siblings in app.slice
+      # (terminal scopes) default to 100.
+      CPUWeight = 1000;
+    };
   };
 
   programs.lan-mouse.enable = false;
