@@ -239,7 +239,7 @@ hl.window_rule({ match = { class = "^(discord)$" },              workspace = "2"
 
 -- 1Password popup
 hl.window_rule({
-    match              = { class = "^(1password)$" },
+    match              = { class = "^(com\\.onepassword\\.OnePassword)$", title = "^(1Password)$" },
     float              = true,
     center             = true,
     min_size           = { 900, 900 },

@@ -16,6 +16,15 @@
     _1password-gui = {
       enable = true;
       # package = pkgs._1password-gui-beta.override {polkitPolicyOwners = ["vilsol"];};
+      # On Wayland the fixed-size prompts get sized unscaled while content is
+      # drawn at text-scaling-factor, cropping them. X11 scales both.
+      package = pkgs._1password-gui.overrideAttrs (old: {
+        postFixup =
+          (old.postFixup or "")
+          + ''
+            wrapProgram $out/bin/1password --add-flags "--ozone-platform=x11 --force-device-scale-factor=1.5"
+          '';
+      });
       polkitPolicyOwners = ["vilsol"];
     };
 
