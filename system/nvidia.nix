@@ -68,7 +68,7 @@
     serviceConfig = {
       Type = "oneshot";
       ExecStartPre = "/run/current-system/sw/bin/nvidia-smi -pm 1";
-      ExecStart = "/run/current-system/sw/bin/nvidia-smi -pl 200";
+      ExecStart = "/run/current-system/sw/bin/nvidia-smi -pl 225";
     };
   };
 
