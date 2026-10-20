@@ -24,6 +24,10 @@
     xkill
   ];
 
-  programs.btop.enable = true;
+  programs.btop = {
+    enable = true;
+    # Only adds /run/opengl-driver/lib to RUNPATH so btop can dlopen NVML.
+    package = pkgs.btop.override {cudaSupport = true;};
+  };
   programs.direnv.enable = true;
 }
