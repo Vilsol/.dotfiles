@@ -172,7 +172,7 @@ in {
   systemd.user.services.echo-cancel = lib.mkIf config.my.fullDesktop {
     Unit = {
       Description = "WebRTC echo cancellation for the Yeti";
-      After = ["graphical-session.target"] ++ pipewireDeps;
+      After = pipewireDeps;
       Wants = pipewireDeps;
       PartOf = ["graphical-session.target"];
     };
