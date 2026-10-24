@@ -33,4 +33,8 @@
         EOF
       '')
   ];
+
+  # services.desktopManager.gnome enables this; Nautilus D-Bus-activates it, it
+  # crawls all of $HOME, never exits, and stalled shutdown for ~85s at 13.9G RSS.
+  services.gnome.localsearch.enable = false;
 }
