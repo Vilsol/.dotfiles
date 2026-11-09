@@ -1,0 +1,12 @@
+{
+    "id": "claudeCap",
+    "name": "Claude Cap",
+    "description": "Show and switch the claude.slice CPU limits via claude-cap",
+    "version": "1.0.0",
+    "author": "Vilsol",
+    "type": "widget",
+    "capabilities": ["dankbar-widget"],
+    "component": "./ClaudeCapWidget.qml",
+    "icon": "speed",
+    "requires": ["claude-cap"]
+}

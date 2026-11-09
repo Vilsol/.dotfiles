@@ -26,5 +26,7 @@
   services.scx = {
     enable = true;
     scheduler = "scx_lavd";
+    # lavd ignores cgroup cpu.max unless asked; claude-cap's CPU caps depend on it.
+    extraArgs = ["--enable-cpu-bw"];
   };
 }

@@ -9,6 +9,7 @@
 
   imports = [
     ./autostart.nix
+    ./claude-cap.nix
     ./dank-material-shell.nix
     ./dev.nix
     ./files.nix
