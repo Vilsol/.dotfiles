@@ -1,24 +1,11 @@
---- a/Modals/DankLauncherV2/Controller.qml
-+++ b/Modals/DankLauncherV2/Controller.qml
-@@ -56,10 +56,7 @@
-             return;
- 
-         SessionData.addLauncherHistory(searchQuery, explicitQuerySession);
--        sections = [];
--        flatModel = [];
-         selectedItem = null;
--        _clearModeCache();
-     }
- 
-     onSearchModeChanged: {
-@@ -120,9 +117,9 @@
-     readonly property int searchCacheVersion: AppSearchService.cacheVersion
- 
-     onSearchCacheVersionChanged: {
-+        _clearModeCache();
-         if (!active)
-             return;
--        _clearModeCache();
-         if (searchMode === "apps") {
-             _loadAppCategories();
-             performSearch();
+--- a/Modals/DLauncherV2/Controller.qml
++++ b/Modals/DLauncherV2/Controller.qml
+@@ -27,7 +27,7 @@
+     property var collapsedSections: ({})
+     property bool keyboardNavigationActive: false
+     property bool active: false
+-    property bool retainResultsOnClose: false
++    property bool retainResultsOnClose: true
+     property var _modeSectionsCache: ({})
+     property bool _queryDrivenSearch: false
+     property bool _diskCacheConsumed: false

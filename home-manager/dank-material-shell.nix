@@ -11,22 +11,21 @@
     enable = true;
     systemd.enable = true;
 
-    # Perf patch: keep the DankLauncherV2 Controller resident so the full
-    # launcher's app-grid model/delegates aren't torn down on close and
-    # rebuilt on every open (the cause of the ~1s SUPER+SPACE open latency).
+    # Perf patch: the launcher Controller tears down its result model/cache
+    # on close, and rebuilding it on every open caused the ~1s SUPER+SPACE
+    # latency. Upstream added retainResultsOnClose (and already drops the
+    # cache when the app list changes) but only the island bar enables it;
+    # dms-launcher-perf.patch flips its default so the modal launchers keep
+    # their results too.
     # The QML is copied into $out/share/quickshell/dms during postInstall, so
     # patch the installed tree (postPatch runs on the Go ./core src instead).
-    # dms-launcher-perf.patch stops the launcher Controller from tearing down
-    # its result model/cache on close (the per-open rebuild caused the ~1s
-    # SUPER+SPACE latency) while still dropping the cache when the app list
-    # actually changes, so reopens are fast without going stale.
     package = inputs.dank-material-shell.packages.${pkgs.stdenv.hostPlatform.system}.dms-shell.overrideAttrs (old: {
       postInstall =
         (old.postInstall or "")
         + ''
           # QML is cp -r'd from the read-only store, so the dir is read-only;
           # patch needs to write a temp file there.
-          chmod -R u+w $out/share/quickshell/dms/Modals/DankLauncherV2
+          chmod -R u+w $out/share/quickshell/dms/Modals/DLauncherV2
           patch -p1 -d $out/share/quickshell/dms < ${./dms-launcher-perf.patch}
         '';
     });
@@ -41,7 +40,7 @@
 
   # File-search backend for DMS's Spotlight launcher. DMS auto-detects via
   # `command -v dsearch` and exposes it as the "Files" tab.
-  home.packages = [pkgs.dsearch];
+  home.packages = [pkgs.dux-search];
 }
 /*
 {
