@@ -88,10 +88,6 @@
     '')
   ];
 
-  services.swaync = {
-    enable = true;
-  };
-
   imports = [
     inputs.hyprshell.homeModules.hyprshell
   ];
