@@ -212,6 +212,7 @@ hl.bind("SHIFT + ALT + T",
 
 -- Vicinae
 hl.bind("SUPER + Space", hl.dsp.exec_cmd("dms ipc call spotlight toggle"))
+hl.bind("SUPER + SHIFT + Space", hl.dsp.exec_cmd("hyprctl switchxkblayout all next"))
 hl.layer_rule({ match = { namespace = "vicinae" }, blur = true, ignore_alpha = 0, no_anim = true })
 
 -- Volume knob (Keychron Q6 Max consumer-control): turn = raise/lower, press = mute.
