@@ -20,7 +20,7 @@
     ipaexfont
     kochi-substitute
     source-code-pro
-    ttf_bitstream_vera
+    ttf-bitstream-vera
     noto-fonts
     noto-fonts-cjk-sans
     noto-fonts-color-emoji

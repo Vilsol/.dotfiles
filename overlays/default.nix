@@ -30,4 +30,14 @@ inputs: [
         })
       ];
   })
+
+  # Python derivations now default to __structuredAttrs, so the list
+  # sphinxBuilders becomes a bash array and sphinx-hook's
+  # `$sphinxBuilders` only sees "html"; the man output is never built.
+  # Pulled in by DMS calendar events. Drop once the hook handles arrays.
+  (_final: prev: {
+    khal = prev.khal.overrideAttrs (_: {
+      sphinxBuilders = "html man";
+    });
+  })
 ]

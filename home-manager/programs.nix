@@ -146,7 +146,7 @@ in {
       dconf-editor
       # gnome-tweaks
       # jellyfin-media-player
-      libreoffice-fresh
+      libreoffice
       pavucontrol
       remmina
       vlc

@@ -49,7 +49,9 @@
     nix-ld.enable = true;
   };
 
-  nix.package = pkgs.lix;
+  # pkgs.lix (2.95) fails to build: nixpkgs passes -Dmimalloc, which only
+  # exists from 2.96. Revert to pkgs.lix once it points at 2.96+.
+  nix.package = pkgs.lixPackageSets.lix_2_96.lix;
   nix.settings.experimental-features = [
     "nix-command"
     "flakes"
