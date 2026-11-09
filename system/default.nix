@@ -4,6 +4,7 @@
     ./attic.nix
     ./cachix.nix
     ./common.nix
+    ./distrust.nix
     ./fonts.nix
     ./games.nix
     ./hyprland.nix
