@@ -1,20 +1,41 @@
 {
   config,
+  lib,
   pkgs,
   ...
-}: {
+}: let
+  # Nyx builds its driver with patchelf 0.19, which leaves DYNAMIC in a
+  # read-only segment of the non-PIE binaries; ld.so segfaults writing
+  # DT_DEBUG. Repatch the untouched origBin copies with 0.15 instead.
+  patchelf_0_15 = pkgs.patchelf.overrideAttrs {
+    version = "0.15.2";
+    src = pkgs.fetchurl {
+      url = "https://github.com/NixOS/patchelf/releases/download/0.15.2/patchelf-0.15.2.tar.bz2";
+      hash = "sha256-F3RfVkFZyOIo/EEtplogSLhGxLa0Igt3y/IkFuAvLXw=";
+    };
+  };
+  nvidiaBin = config.hardware.nvidia.package.bin;
+  nvidiaBinFixed = pkgs.runCommand "nvidia-bin-fixed" {} ''
+    mkdir -p $out/bin
+    for i in nvidia-smi nvidia-cuda-mps-control nvidia-powerd; do
+      install -m755 ${nvidiaBin}/origBin/$i $out/bin/$i
+      ${patchelf_0_15}/bin/patchelf \
+        --set-interpreter "$(${patchelf_0_15}/bin/patchelf --print-interpreter ${nvidiaBin}/bin/$i)" \
+        --set-rpath "$(${patchelf_0_15}/bin/patchelf --print-rpath ${nvidiaBin}/bin/$i)" \
+        $out/bin/$i
+    done
+  '';
+in {
   services.xserver.videoDrivers = ["nvidia"];
 
   hardware = {
     graphics.enable = true;
     nvidia = {
       # package = config.boot.kernelPackages.nvidiaPackages.beta;
-      # The pinned cachyos overlay builds kernelPackages from its own older
-      # nixpkgs, so its nvidiaPackages lag ours. Take the driver set from our
-      # nixpkgs but build it against the cachyos kernel.
-      package =
-        (config.boot.kernelPackages.callPackage
-          "${pkgs.path}/pkgs/os-specific/linux/nvidia-x11" {}).new_feature;
+      # Nyx's driver for its kernel (cached on nyx-cache). Building nvidia-x11
+      # ourselves against the znver4 kernelPackages drags nvidia-settings'
+      # deps through the znver4 package set, where cups is marked broken.
+      package = config.boot.kernelPackages.nvidiaPackages.cachyos;
       modesetting.enable = true;
       open = true;
 
@@ -47,6 +68,7 @@
 
   environment.systemPackages = [
     pkgs.nvidia-vaapi-driver
+    (lib.hiPrio nvidiaBinFixed)
   ];
 
   systemd.timers."nvidia-tdp" = {

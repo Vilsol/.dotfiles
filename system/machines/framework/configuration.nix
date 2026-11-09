@@ -12,7 +12,8 @@
 
   boot = {
     # Alder Lake has no AVX-512, so the shared zen4 build would fault on it.
-    kernelPackages = pkgs.cachyosKernels.linuxPackages-cachyos-latest-lto-x86_64-v3;
+    # Nyx has no x86_64-v3 variant; the generic build is the cached one.
+    kernelPackages = pkgs.linuxPackages_cachyos;
 
     initrd = {
       secrets."/crypto_keyfile.bin" = null;

@@ -22,9 +22,15 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    # Kept as a fallback while its binary cache is down
+    # (xddxdd/nix-cachyos-kernel#110); kernels now come from chaotic.
     nix-cachyos-kernel = {
       url = "github:xddxdd/nix-cachyos-kernel/release";
     };
+
+    # No nixpkgs.follows: Nyx builds against its own pin, and following ours
+    # changes the kernel's store path and misses nyx-cache.chaotic.cx.
+    chaotic.url = "github:chaotic-cx/nyx/nyxpkgs-unstable";
 
     witr = {
       url = "github:pranshuparmar/witr";
@@ -142,6 +148,8 @@
             }
 
             (./. + "/system/machines/${name}/configuration.nix")
+
+            inputs.chaotic.nixosModules.default
 
             home-manager.nixosModules.home-manager
             {

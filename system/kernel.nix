@@ -4,11 +4,10 @@
   ...
 }: {
   boot = {
-    kernelPackages = lib.mkDefault pkgs.cachyosKernels.linuxPackages-cachyos-latest-lto-zen4;
+    kernelPackages = lib.mkDefault pkgs.linuxPackages_cachyos-lto-znver4;
     supportedFilesystems = ["ntfs"];
     loader.systemd-boot.enable = true;
     loader.efi.canTouchEfiVariables = true;
-    initrd.systemd.enable = true;
   };
 
   nixpkgs.config.packageOverrides = pkgs: {
